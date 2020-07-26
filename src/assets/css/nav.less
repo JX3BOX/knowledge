@@ -72,6 +72,32 @@
         border-bottom:1px solid #eee;
     }
 }
+.m-nav-list{
+    padding:0;
+    margin:0;
+    list-style: none;
+    a{
+        .db;
+        padding:0 5px;
+        .fz(14px,2);
+        &:before{
+            content : '»';
+            .mr(5px);
+            color:#888;
+        }
+        &:hover{
+            background-color:#e6f0fb;
+        }
+        &.on{
+            .bold;
+        }
+    }
+    span{
+        color:#999;
+        .fz(12px);
+        .fr;
+    }
+}
 
 // 移动端侧边栏显示列表页导航
 .p-single{

@@ -1,29 +1,42 @@
 <template>
     <nav class="m-nav">
-        <single_nav v-if="mode == 'single'" />
-        <list_nav />
+        <ul class="m-nav-list">
+            <li><a href="" :class="{on:!subtype}">全部</a></li>
+            <li v-for="(label, type) in types" :key="type">
+                <a :href="type | listLink" :class="{ on: isActive(type) }"
+                    >{{ label }}</a
+                >
+            </li>
+        </ul>
     </nav>
 </template>
 
 <script>
-import single_nav from "./single_nav";
-import list_nav from "./list_nav";
+import { types } from "@jx3box/jx3box-data/data/common/wiki.json";
 export default {
     name: "Nav",
     data: function() {
-        return {};
+        return {
+            types,
+        };
     },
     computed: {
-        mode: function() {
-            return this.$store.state.mode;
+        subtype: function() {
+            return this.$store.state.subtype;
         },
     },
-    methods: {},
+    methods: {
+        isActive: function(subtype) {
+            return subtype == this.subtype;
+        },
+    },
+    filters: {
+        listLink: function(type) {
+            return "./?subtype=" + type;
+        },
+    },
     mounted: function() {},
-    components:{
-        single_nav,
-        list_nav,
-    }
+    components: {},
 };
 </script>
 

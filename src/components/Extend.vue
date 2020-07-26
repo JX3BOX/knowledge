@@ -1,13 +1,23 @@
 <template>
     <div class="m-extend">
-        <single_side v-if="mode == 'single'"/>
-        <list_side v-else />
+        <!-- 群号 -->
+        <RightSideMsg>
+            <em>休闲党交流群</em> :
+            <strong><a href="https://jq.qq.com/?_wv=1027&k=InbtJGcw">658035079</a></strong>
+        </RightSideMsg>
+
+        <!-- 排行榜 -->
+        <div class="m-side-rank">
+            <h3 class="c-sidebar-right-title">
+                <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" />
+                热门词条
+                <!-- <router-link class="u-more" to="/rank">完整榜单 &raquo;</router-link> -->
+            </h3>
+        </div>
     </div>
 </template>
 
 <script>
-import list_side from "@/components/list_side.vue";
-import single_side from "@/components/single_side.vue";
 export default {
     name: "Extend",
     props: [],
@@ -15,15 +25,10 @@ export default {
         return {};
     },
     computed: {
-        mode: function() {
-            return this.$store.state.mode
-        },
     },
     methods: {},
     mounted: function() {},
     components: {
-        list_side,
-        single_side,
     },
 };
 </script>
