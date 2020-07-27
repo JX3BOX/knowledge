@@ -6,7 +6,7 @@
             slug="wiki"
             root="/wiki"
             :publishEnable="true"
-            :adminEnable="true"
+            :adminEnable="false"
             :feedbackEnable="true"
         >
             <img slot="logo" svg-inline src="./assets/img/wiki.svg" />
@@ -18,7 +18,7 @@
         <Main :withoutRight="false">
             <single v-if="mode == 'single'" />
             <div class="m-main" v-else>
-                <!-- <tabs /> -->
+                <tabs />
                 <router-view />
             </div>
             <RightSidebar>

@@ -16,10 +16,10 @@ function getStat(id) {
 }
 
 function postStat(id) {
-    let type = location.pathname.split('/')[1]
+    // let type = location.pathname.split('/')[1]
     return axios.get(stat + id + "/summary", {
         params: {
-            type: type,
+            type: 'wiki',
             actions: "views",
         },
     });

@@ -1,18 +1,13 @@
 <template>
-    <singlebox :post="post" :author="author" :stat="stat">
-        <div class="u-meta u-sub-block" slot="single-header">
-            <em class="u-label">首领</em>
-            <span class="u-value">
-                xx
-            </span>
+    <div class="m-wiki-wrapper">
+        <div class="m-wiki" v-if="data">
+            {{data.title}}
         </div>
-
-        <!-- 其它meta -->
-    </singlebox>
+        <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
+    </div>
 </template>
 
 <script>
-import singlebox from "@jx3box/jx3box-page/src/cms-single.vue";
 // 助手函数
 import _ from "lodash";
 // 数据服务
@@ -25,9 +20,7 @@ export default {
     data: function() {
         return {
             loading: false,
-
-            post: {},
-            author: {},
+            data: "",
             stat: {},
         };
     },
@@ -41,10 +34,9 @@ export default {
     created: function() {
         if (this.id) {
             this.loading = true;
-            getPost(this.id, this)
+            getPost(this.id)
                 .then((res) => {
-                    this.post = this.$store.state.post = res.data.data.post;
-                    this.author = this.$store.state.author = res.data.data.author;
+                    this.data = res.data.data;
                     this.$store.state.status = true;
                 })
                 .finally(() => {
@@ -57,9 +49,7 @@ export default {
             postStat(this.id);
         }
     },
-    components: {
-        singlebox,
-    },
+    components: {},
 };
 </script>
 

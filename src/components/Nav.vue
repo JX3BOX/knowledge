@@ -1,7 +1,7 @@
 <template>
     <nav class="m-nav">
         <ul class="m-nav-list">
-            <li><a href="" :class="{on:!subtype}">全部</a></li>
+            <li><a href="./?subtype=" :class="{on:!subtype}">全部</a></li>
             <li v-for="(label, type) in types" :key="type">
                 <a :href="type | listLink" :class="{ on: isActive(type) }"
                     >{{ label }}</a
