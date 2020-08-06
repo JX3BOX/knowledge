@@ -1,9 +1,46 @@
 <template>
     <div class="m-wiki-wrapper">
-        <div class="m-wiki" v-if="data">
-            {{data.title}}
+        <div class="m-wiki" v-if="data && data.status">
+            <h1 class="u-title">{{ data.title }}</h1>
+            <Article :content="data.content" />
+            <div class="u-meta">
+                <time class="u-time"
+                    >创建于 : {{ data.created_at }} | 更新于 :
+                    {{ data.updated_at }}</time
+                >
+            </div>
+            <el-divider content-position="left">讨论</el-divider>
+            <Comment :id="id" category="wiki" />
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
+        <div class="m-admin">
+            <el-button
+                class="u-btn"
+                type="primary"
+                @click="edit"
+                size="mini"
+                icon="el-icon-edit-outline"
+                >编辑</el-button
+            >
+            <el-button
+                v-if="isAdmin && data.status"
+                class="u-btn"
+                type="danger"
+                @click="admin('private')"
+                size="mini"
+                icon="el-icon-delete"
+                >删除</el-button
+            >
+            <el-button
+                v-if="isAdmin && !data.status"
+                class="u-btn"
+                type="success"
+                @click="admin('public')"
+                size="mini"
+                icon="el-icon-refresh-left"
+                >恢复</el-button
+            >
+        </div>
     </div>
 </template>
 
@@ -11,9 +48,12 @@
 // 助手函数
 import _ from "lodash";
 // 数据服务
-import { getPost } from "../service/post.js";
+import { getPost, adminPost } from "../service/post.js";
 import { getStat, postStat } from "../service/stat.js";
-
+import Article from "@jx3box/jx3box-editor/src/Article.vue";
+import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
+import User from "@jx3box/jx3box-common/js/user";
+import { publishLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "single",
     props: [],
@@ -22,6 +62,7 @@ export default {
             loading: false,
             data: "",
             stat: {},
+            isAdmin: User.getInfo().group >= 64,
         };
     },
     computed: {
@@ -29,7 +70,26 @@ export default {
             return this.$store.state.pid;
         },
     },
-    methods: {},
+    methods: {
+        admin: function(status) {
+            adminPost(this.id, status).then((res) => {
+                this.$alert("确认操作吗", "消息", {
+                    confirmButtonText: "确定",
+                    callback: (action) => {
+                        if (action == "confirm") {
+                            this.$message({
+                                type: "success",
+                                message: `操作成功`,
+                            });
+                        }
+                    },
+                });
+            });
+        },
+        edit: function() {
+            location.href = publishLink('wiki') + '/' + this.id
+        },
+    },
     filters: {},
     created: function() {
         if (this.id) {
@@ -49,7 +109,10 @@ export default {
             postStat(this.id);
         }
     },
-    components: {},
+    components: {
+        Article,
+        Comment,
+    },
 };
 </script>
 

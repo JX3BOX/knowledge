@@ -18,15 +18,23 @@
                     @change="searchPosts"
                 >
                     <template slot="prepend">关键词</template>
-                    <el-button slot="append" icon="el-icon-search" @click="searchPosts"></el-button>
+                    <el-button
+                        slot="append"
+                        icon="el-icon-search"
+                        @click="searchPosts"
+                    ></el-button>
                 </el-input>
             </div>
 
             <!-- 列表 -->
-            <div class="m-archive-list" v-if="data.length">
+            <div class="m-wiki-list" v-if="data.length">
                 <ul class="u-list">
-                    <li class="u-item" v-for="(item, i) in data" :key="i">
-                    </li>
+                    <a class="u-item" v-for="(item, i) in data" :key="i" :href="item.id | postLink">
+                        <span class="u-title"><span class="u-type">{{ types[item.type] }}</span> {{ item.title }}</span>
+                        <span class="u-desc" v-if="item.tag.length">
+                            {{item.tag | tagFormat}}
+                        </span>
+                    </a>
                 </ul>
             </div>
         </listbox>
@@ -36,8 +44,9 @@
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import _ from "lodash";
-import { searchPost } from "../service/post";
+import { getPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
+import { types } from "@jx3box/jx3box-data/data/common/wiki.json";
 export default {
     name: "list",
     props: [],
@@ -49,9 +58,10 @@ export default {
             page: 1, //当前页数
             total: 1, //总条目数
             per: 10, //每页条目
-            pages:1,
+            pages: 1,
 
             search: "",
+            types,
         };
     },
     computed: {
@@ -60,42 +70,54 @@ export default {
         },
         params: function() {
             let params = {
-                per: this.per,
-                subtype: this.subtype,
+                size: this.per,
+                page: this.page,
+                type: this.subtype,
+                keyword: this.search,
             };
             return params;
         },
     },
     methods: {
-        loadPosts: function(i = 1, append = false) {
+        loadPosts: function(i = 1) {
+            getPosts(this.params)
+                .then((res) => {
+                    this.setData(res.data.data);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        searchPosts : function (){
-            if(!this.search) return
-            searchPost(this.search).then((res) => {
-                this.setData(res.data)
-            }).finally(() => {
-                this.loading = false
-            })
+        searchPosts: function() {
+            if (!this.search) return;
+            this.loadPosts(1);
         },
         changePage: function(i) {
             this.loadPosts(i);
+            window.scrollTo(0, 0);
         },
         appendPage: function(i) {
-            this.loadPosts(i, true);
+            this.loadPosts(i);
         },
-        setData : function (data){
-            this.data = data.data
-            this.total = data.total
-            this.pages = data.last_page
-        }
+        setData: function(data) {
+            this.data = data.data;
+            this.total = data.total;
+            this.pages = data.last_page;
+        },
     },
     filters: {
+        postLink : function (id){
+            return './?pid=' + id
+        },
+        tagFormat : function (tag){
+            return tag.join('、')
+        }
     },
     created: function() {
         this.loadPosts(1);
     },
     components: {
-        listbox
+        listbox,
     },
 };
 </script>

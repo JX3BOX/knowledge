@@ -1,0 +1,39 @@
+.m-wiki-list {
+    .u-list{
+        padding:0;
+        margin:0;
+    }
+    
+    .u-item {
+        background-color: @bg-light;
+        border: 1px solid #eee;
+        .r(4px);
+        .mb(20px);
+        .db;
+        padding: 10px;
+        .clearfix;
+
+        transition: 0.06s border ease-in-out;
+        &:hover {
+            border-color: @primary;
+        }
+    }
+
+    .u-type{
+        background-color:#e6f0fb;
+        .fz(12px);
+        padding:2px 5px;
+        .mr(5px);
+    }
+
+    .u-title {
+        .fz(14px, 2);
+        .db;
+    }
+
+    .u-desc {
+        color: #555;
+        .db;
+        .fz(12px);
+    }
+}

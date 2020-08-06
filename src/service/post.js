@@ -1,24 +1,20 @@
-import { axios } from "./axios";
+import { axios,$ } from "./axios";
 import { __bb } from "@jx3box/jx3box-common/js/jx3box.json";
 
-// function getPosts(params, vm) {
-//     let query = {
-//         type: "fb",
-//     };
-//     if (params) {
-//         query = Object.assign(query, params);
-//     }
-
-//     return $.get(API_LIST, {
-//         params: query,
-//     })
-// }
 function getPost(pid) {
     return axios.get(__bb + `api/wiki/${pid}`);
 }
 
-function searchPost(kw) {
-    return axios.get(__bb + "api/wiki/search/" + kw);
+function getPosts(params) {
+    return axios.get(__bb + "api/wiki/search/", {
+        params: params,
+    });
 }
 
-export { searchPost, getPost };
+function adminPost(pid,status) {
+    return $.post(__bb + `admin/wiki/${pid}/check`, {
+        status: status,
+    });
+}
+
+export { getPosts, getPost, adminPost };
