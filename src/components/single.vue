@@ -2,6 +2,27 @@
     <div class="m-wiki-wrapper">
         <div class="m-wiki" v-if="data && data.status">
             <h1 class="u-title">{{ data.title }}</h1>
+            <div class="u-info" v-if="id">
+                <span class="u-views"><em>热度</em> {{ stat.views }}</span>
+                <span class="u-authors"
+                    ><em>参与贡献</em>
+                    <a
+                        class="u-author"
+                        v-for="author in authors"
+                        :key="author"
+                        :href="author.ID | authorLink"
+                        target="_blank"
+                    >
+                        <el-tooltip
+                            effect="dark"
+                            :content="author.display_name"
+                            placement="top"
+                        >
+                            <img :src="showAvatar(author.user_avatar)" />
+                        </el-tooltip>
+                    </a>
+                </span>
+            </div>
             <Article :content="data.content" />
             <div class="u-meta">
                 <time class="u-time"
@@ -48,12 +69,21 @@
 // 助手函数
 import _ from "lodash";
 // 数据服务
-import { getPost, adminPost,getUserPost } from "../service/post.js";
+import {
+    getPost,
+    adminPost,
+    getUserPost,
+    getAuthors,
+} from "../service/post.js";
 import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import User from "@jx3box/jx3box-common/js/user";
-import { publishLink } from "@jx3box/jx3box-common/js/utils";
+import {
+    publishLink,
+    authorLink,
+    showAvatar,
+} from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "single",
     props: [],
@@ -63,15 +93,16 @@ export default {
             data: "",
             stat: {},
             isAdmin: User.getInfo().group >= 64,
+            authors: [],
         };
     },
     computed: {
         id: function() {
             return this.$store.state.pid;
         },
-        hid : function (){
+        hid: function() {
             return this.$store.state.hid;
-        }
+        },
     },
     methods: {
         admin: function(status) {
@@ -90,10 +121,15 @@ export default {
             });
         },
         edit: function() {
-            location.href = publishLink('wiki') + '/' + this.id
+            location.href = publishLink("wiki") + "/" + this.id;
+        },
+        showAvatar: showAvatar,
+    },
+    filters: {
+        authorLink: function(uid) {
+            return authorLink(uid);
         },
     },
-    filters: {},
     created: function() {
         if (this.id) {
             this.loading = true;
@@ -101,6 +137,12 @@ export default {
                 .then((res) => {
                     this.data = res.data.data;
                     this.$store.state.status = true;
+
+                    let uids = new Set(this.data.edited_user_ids);
+                    uids = Array.from(uids).join(",");
+                    getAuthors(uids).then((res) => {
+                        this.authors = res.data.data.list;
+                    });
                 })
                 .finally(() => {
                     this.loading = false;
@@ -111,12 +153,12 @@ export default {
             });
             postStat(this.id);
         }
-        
-        if(this.hid){
+
+        if (this.hid) {
             getUserPost(this.hid).then((res) => {
                 this.data = res.data.data;
                 this.$store.state.status = true;
-            })
+            });
         }
     },
     components: {
