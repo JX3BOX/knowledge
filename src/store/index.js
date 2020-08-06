@@ -12,6 +12,7 @@ let store = {
         subtype : '',
 
         // 单页
+        hid:0,
         pid : 0,
         post : {},
         meta : {},

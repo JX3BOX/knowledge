@@ -52,7 +52,8 @@ export default {
     beforeCreate: function() {
         let params = new URLSearchParams(location.search);
         this.$store.state.pid = params.get("pid") || getRewrite("pid");
-        this.$store.state.mode = this.$store.state.pid ? "single" : "list";
+        this.$store.state.hid = params.get("hid") || getRewrite("hid");
+        this.$store.state.mode = (this.$store.state.pid || this.$store.state.hid) ? "single" : "list";
 
         // 根据情况选择subtype取值
         this.$store.state.subtype = getRewrite("subtype");

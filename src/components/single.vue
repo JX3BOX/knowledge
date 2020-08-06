@@ -13,7 +13,7 @@
             <Comment :id="id" category="wiki" />
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
-        <div class="m-admin">
+        <div class="m-admin" v-if="id">
             <el-button
                 class="u-btn"
                 type="primary"
@@ -48,7 +48,7 @@
 // 助手函数
 import _ from "lodash";
 // 数据服务
-import { getPost, adminPost } from "../service/post.js";
+import { getPost, adminPost,getUserPost } from "../service/post.js";
 import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
@@ -69,6 +69,9 @@ export default {
         id: function() {
             return this.$store.state.pid;
         },
+        hid : function (){
+            return this.$store.state.hid;
+        }
     },
     methods: {
         admin: function(status) {
@@ -107,6 +110,13 @@ export default {
                 if (data) this.stat = this.$store.state.stat = data;
             });
             postStat(this.id);
+        }
+        
+        if(this.hid){
+            getUserPost(this.hid).then((res) => {
+                this.data = res.data.data;
+                this.$store.state.status = true;
+            })
         }
     },
     components: {
