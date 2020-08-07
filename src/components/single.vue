@@ -1,6 +1,6 @@
 <template>
-    <div class="m-wiki-wrapper">
-        <div class="m-wiki" v-if="data && data.status">
+    <div class="m-wiki-wrapper" v-loading="loading">
+        <div class="m-wiki" v-if="data">
             <h1 class="u-title">{{ data.title }}</h1>
             <div class="u-info" v-if="id">
                 <span class="u-views"><em>热度</em> {{ stat.views }}</span>
@@ -155,10 +155,13 @@ export default {
         }
 
         if (this.hid) {
+            this.loading = true;
             getUserPost(this.hid).then((res) => {
                 this.data = res.data.data;
                 this.$store.state.status = true;
-            });
+            }).finally(() => {
+                    this.loading = false;
+                });
         }
     },
     components: {
