@@ -3,13 +3,13 @@
         <div class="m-wiki" v-if="data">
             <h1 class="u-title">{{ data.title }}</h1>
             <div class="u-info" v-if="id">
-                <span class="u-views"><em>热度</em> {{ stat.views }}</span>
+                <span class="u-views"><em>热度</em> {{ stat && stat.views }}</span>
                 <span class="u-authors"
                     ><em>参与贡献</em>
                     <a
                         class="u-author"
-                        v-for="author in authors"
-                        :key="author"
+                        v-for="(author,i) in authors"
+                        :key="i"
                         :href="author.ID | authorLink"
                         target="_blank"
                     >
