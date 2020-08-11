@@ -1,5 +1,5 @@
 import { axios, $ } from "./axios";
-import { __bb,__server } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __bb, __server } from "@jx3box/jx3box-common/js/jx3box.json";
 
 function getPost(pid) {
     return axios.get(__bb + `api/wiki/${pid}`);
@@ -20,12 +20,20 @@ function adminPost(pid, status) {
     });
 }
 
-function getAuthors(uids){
-    return axios.get(__server + 'user/list',{
-        params : {
-            uid : uids
-        }
-    })
+function getAuthors(uids) {
+    return axios.get(__server + "user/list", {
+        params: {
+            uid: uids,
+        },
+    });
 }
 
-export { getPosts, getPost, adminPost, getUserPost,getAuthors };
+function getRankPost(list) {
+    return axios.get(__bb + "api/wiki/search/", {
+        params: {
+            list: list,
+        },
+    });
+}
+
+export { getPosts, getPost, adminPost, getUserPost, getAuthors, getRankPost };
