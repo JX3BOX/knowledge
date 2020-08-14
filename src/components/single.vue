@@ -1,7 +1,7 @@
 <template>
     <div class="m-wiki-wrapper" v-loading="loading">
         <div class="m-wiki" v-if="data">
-            <h1 class="u-title">{{ data.title }}</h1>
+            <h1 class="u-title">[{{types[data.type]}}] {{ data.title }}</h1>
             <div class="u-info" v-if="id">
                 <span class="u-views"><em>热度</em> {{ stat && stat.views }}</span>
                 <span class="u-authors"
@@ -79,6 +79,7 @@ import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import User from "@jx3box/jx3box-common/js/user";
+import { types } from "@jx3box/jx3box-data/data/common/wiki.json";
 import {
     publishLink,
     authorLink,
@@ -94,6 +95,7 @@ export default {
             stat: {},
             isAdmin: User.getInfo().group >= 64,
             authors: [],
+            types
         };
     },
     computed: {
