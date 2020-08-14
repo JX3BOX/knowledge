@@ -79,10 +79,10 @@ export default {
         },
     },
     methods: {
-        loadPosts: function(i = 1) {
+        loadPosts: function(i = 1,append=false) {
             getPosts(this.params)
                 .then((res) => {
-                    this.setData(res.data.data);
+                    this.setData(res.data.data,append);
                 })
                 .finally(() => {
                     this.loading = false;
@@ -93,14 +93,20 @@ export default {
             this.loadPosts(1);
         },
         changePage: function(i) {
+            this.page = i
             this.loadPosts(i);
             window.scrollTo(0, 0);
         },
         appendPage: function(i) {
-            this.loadPosts(i);
+            this.page = i
+            this.loadPosts(i,true);
         },
-        setData: function(data) {
-            this.data = data.data;
+        setData: function(data,append=false) {
+            if(append){
+                this.data = this.data.concat(data.data);
+            }else{
+                this.data = data.data;
+            }
             this.total = data.total;
             this.pages = data.last_page;
         },
