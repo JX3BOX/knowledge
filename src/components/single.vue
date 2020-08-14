@@ -1,26 +1,36 @@
 <template>
     <div class="m-wiki-wrapper" v-loading="loading">
         <div class="m-wiki" v-if="data">
-            <h1 class="u-title">[{{types[data.type]}}] {{ data.title }}</h1>
+            <h1 class="u-title">{{ data.title }}</h1>
             <div class="u-info" v-if="id">
-                <span class="u-views"><em>热度</em> {{ stat && stat.views }}</span>
-                <span class="u-authors"
-                    ><em>参与贡献</em>
-                    <a
-                        class="u-author"
-                        v-for="(author,i) in authors"
-                        :key="i"
-                        :href="author.ID | authorLink"
-                        target="_blank"
-                    >
-                        <el-tooltip
-                            effect="dark"
-                            :content="author.display_name"
-                            placement="top"
+                <span class="u-info-item"
+                    ><em class="u-label">类型</em
+                    ><span class="u-value">{{ types[data.type] }}</span></span
+                >
+                <span class="u-info-item u-views"
+                    ><em class="u-label">热度</em
+                    ><span class="u-value">{{
+                        stat ? stat.views : "-"
+                    }}</span></span
+                >
+                <span class="u-info-item u-authors"
+                    ><em class="u-label">参与贡献</em>
+                    <span class="u-value"
+                        ><a
+                            class="u-author"
+                            v-for="(author, i) in authors"
+                            :key="i"
+                            :href="author.ID | authorLink"
+                            target="_blank"
                         >
-                            <img :src="showAvatar(author.user_avatar)" />
-                        </el-tooltip>
-                    </a>
+                            <el-tooltip
+                                effect="dark"
+                                :content="author.display_name"
+                                placement="top"
+                            >
+                                <img :src="showAvatar(author.user_avatar)" />
+                            </el-tooltip> </a
+                    ></span>
                 </span>
             </div>
             <Article :content="data.content" />
@@ -41,7 +51,7 @@
                 @click="edit"
                 size="mini"
                 icon="el-icon-edit-outline"
-                >编辑</el-button
+                >编辑该词条</el-button
             >
             <el-button
                 v-if="isAdmin && data.status"
@@ -95,7 +105,7 @@ export default {
             stat: {},
             isAdmin: User.getInfo().group >= 64,
             authors: [],
-            types
+            types,
         };
     },
     computed: {
@@ -158,10 +168,12 @@ export default {
 
         if (this.hid) {
             this.loading = true;
-            getUserPost(this.hid).then((res) => {
-                this.data = res.data.data;
-                this.$store.state.status = true;
-            }).finally(() => {
+            getUserPost(this.hid)
+                .then((res) => {
+                    this.data = res.data.data;
+                    this.$store.state.status = true;
+                })
+                .finally(() => {
                     this.loading = false;
                 });
         }
