@@ -9,6 +9,16 @@
             @appendPage="appendPage"
             @changePage="changePage"
         >
+            <template slot="filter">
+                <a
+                    :href="publish_link"
+                    class="u-publish el-button el-button--primary el-button--small"
+                >
+                    + 创建百科词条
+                </a>
+                <!-- 排序过滤 -->
+                <orderBy @filter="filter"></orderBy>
+            </template>
             <!-- 搜索 -->
             <div class="m-archive-search" slot="search-before">
                 <el-input
@@ -29,10 +39,18 @@
             <!-- 列表 -->
             <div class="m-wiki-list" v-if="data.length">
                 <ul class="u-list">
-                    <a class="u-item" v-for="(item, i) in data" :key="i" :href="item.id | postLink">
-                        <span class="u-title"><span class="u-type">{{ types[item.type] }}</span> {{ item.title }}</span>
+                    <a
+                        class="u-item"
+                        v-for="(item, i) in data"
+                        :key="i"
+                        :href="item.id | postLink"
+                    >
+                        <span class="u-title"
+                            ><span class="u-type">{{ types[item.type] }}</span>
+                            {{ item.title }}</span
+                        >
                         <span class="u-desc" v-if="item.tag.length">
-                            {{item.tag | tagFormat}}
+                            {{ item.tag | tagFormat }}
                         </span>
                     </a>
                 </ul>
@@ -47,6 +65,7 @@ import _ from "lodash";
 import { getPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
 import { types } from "@jx3box/jx3box-data/data/common/wiki.json";
+import { publishLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "list",
     props: [],
@@ -60,6 +79,7 @@ export default {
             per: 10, //每页条目
             pages: 1,
 
+            order: "", //排序模式
             search: "",
             types,
         };
@@ -75,14 +95,20 @@ export default {
                 type: this.subtype,
                 keyword: this.search,
             };
+            if(this.order){
+                params.order = this.order
+            }
             return params;
+        },
+        publish_link: function(val) {
+            return publishLink("wiki");
         },
     },
     methods: {
-        loadPosts: function(i = 1,append=false) {
+        loadPosts: function(i = 1, append = false) {
             getPosts(this.params)
                 .then((res) => {
-                    this.setData(res.data.data,append);
+                    this.setData(res.data.data, append);
                 })
                 .finally(() => {
                     this.loading = false;
@@ -93,31 +119,41 @@ export default {
             this.loadPosts(1);
         },
         changePage: function(i) {
-            this.page = i
+            this.page = i;
             this.loadPosts(i);
             window.scrollTo(0, 0);
         },
         appendPage: function(i) {
-            this.page = i
-            this.loadPosts(i,true);
+            this.page = i;
+            this.loadPosts(i, true);
         },
-        setData: function(data,append=false) {
-            if(append){
+        setData: function(data, append = false) {
+            if (append) {
                 this.data = this.data.concat(data.data);
-            }else{
+            } else {
                 this.data = data.data;
             }
             this.total = data.total;
             this.pages = data.last_page;
         },
+        filter: function(o) {
+            if(o['val'] == 'podate'){
+                this.order = 'created_at'
+            }else if(o['val'] == 'update'){
+                this.order = 'updated_at'
+            }else{
+                this.order = ''
+            }
+            this.loadPosts();
+        },
     },
     filters: {
-        postLink : function (id){
-            return './?pid=' + id
+        postLink: function(id) {
+            return "./?pid=" + id;
         },
-        tagFormat : function (tag){
-            return tag.join('、')
-        }
+        tagFormat: function(tag) {
+            return tag.join("、");
+        },
     },
     created: function() {
         this.loadPosts(1);
