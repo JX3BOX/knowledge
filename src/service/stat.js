@@ -31,7 +31,7 @@ function getRank() {
         params : {
             postType : 'wiki',
             postAction : 'views',
-            pageSize : 10
+            pageSize : 20
         }
     });
 }
