@@ -40,7 +40,8 @@
                     {{ data.updated_at }}</time
                 >
             </div>
-            <el-divider content-position="left">讨论</el-divider>
+            <!-- TODO:历史版本 -->
+            <el-divider content-position="left" v-if="id" >讨论</el-divider>
             <Comment :id="id" category="wiki" v-if="id" />
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
