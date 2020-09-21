@@ -53,6 +53,7 @@
                         v-for="(item, i) in data"
                         :key="i"
                         :href="item.id | postLink"
+                        target="_blank"
                     >
                         <span class="u-title"
                             ><span class="u-type">{{ types[item.type] }}</span>
@@ -71,13 +72,13 @@
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import _ from "lodash";
-import { getList, doAction } from "../service/post";
+import { getList } from "../service/post";
 import dateFormat from "../utils/dateFormat";
-import types from "@jx3box/jx3box-data/data/common/wiki.json";
+import types from "@/assets/data/types.json";
 import User from "@jx3box/jx3box-common/js/user";
 const statusmap = {
     "0": "待审核",
-    "1": "已通过",
+    // "1": "已通过",
     "2": "驳回",
 };
 export default {

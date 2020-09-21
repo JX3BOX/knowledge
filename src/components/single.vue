@@ -41,7 +41,7 @@
                 >
             </div>
             <el-divider content-position="left">讨论</el-divider>
-            <Comment :id="id" category="wiki" />
+            <Comment :id="id" category="wiki" v-if="id" />
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
         <div class="m-admin" v-if="id">
@@ -53,8 +53,9 @@
                 icon="el-icon-edit-outline"
                 >编辑该词条</el-button
             >
+            <template v-if="isAdmin">
             <el-button
-                v-if="isAdmin && data.status"
+                v-if="data.status && id"
                 class="u-btn"
                 type="danger"
                 @click="admin('private')"
@@ -63,7 +64,7 @@
                 >删除</el-button
             >
             <el-button
-                v-if="isAdmin && !data.status"
+                v-if="!data.status && id"
                 class="u-btn"
                 type="success"
                 @click="admin('public')"
@@ -71,6 +72,23 @@
                 icon="el-icon-refresh-left"
                 >恢复</el-button
             >
+            <el-button
+                v-if="!data.status && hid"
+                @click="check(item.id, 'pass')"
+                type="success"
+                size="mini"
+                icon="el-icon-check"
+                >通过</el-button
+            >
+            <el-button
+            v-if="!data.status && hid"
+                @click="check(item.id, 'reject')"
+                type="info"
+                size="mini"
+                icon="el-icon-close"
+                >驳回</el-button
+            >
+            </template>
         </div>
     </div>
 </template>
@@ -84,6 +102,7 @@ import {
     adminPost,
     getUserPost,
     getAuthors,
+    doAction,
 } from "../service/post.js";
 import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
@@ -136,6 +155,14 @@ export default {
             location.href = publishLink("wiki") + "/" + this.id;
         },
         showAvatar: showAvatar,
+        check: function(id, action) {
+            doAction(id, action, "不符合规范").then((res) => {
+                this.$message({
+                    message: res.data.data || "操作成功",
+                    type: "success",
+                });
+            });
+        },
     },
     filters: {
         authorLink: function(uid) {
