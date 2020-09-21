@@ -44,7 +44,7 @@
             <Comment :id="id" category="wiki" v-if="id" />
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
-        <div class="m-admin" v-if="id">
+        <div class="m-admin">
             <el-button
                 class="u-btn"
                 type="primary"
@@ -54,40 +54,40 @@
                 >编辑该词条</el-button
             >
             <template v-if="isAdmin">
-            <el-button
-                v-if="data.status && id"
-                class="u-btn"
-                type="danger"
-                @click="admin('private')"
-                size="mini"
-                icon="el-icon-delete"
-                >删除</el-button
-            >
-            <el-button
-                v-if="!data.status && id"
-                class="u-btn"
-                type="success"
-                @click="admin('public')"
-                size="mini"
-                icon="el-icon-refresh-left"
-                >恢复</el-button
-            >
-            <el-button
-                v-if="!data.status && hid"
-                @click="check(item.id, 'pass')"
-                type="success"
-                size="mini"
-                icon="el-icon-check"
-                >通过</el-button
-            >
-            <el-button
-            v-if="!data.status && hid"
-                @click="check(item.id, 'reject')"
-                type="info"
-                size="mini"
-                icon="el-icon-close"
-                >驳回</el-button
-            >
+                <el-button
+                    v-if="data.status && id"
+                    class="u-btn"
+                    type="danger"
+                    @click="admin('private')"
+                    size="mini"
+                    icon="el-icon-delete"
+                    >删除</el-button
+                >
+                <el-button
+                    v-if="!data.status && id"
+                    class="u-btn"
+                    type="success"
+                    @click="admin('public')"
+                    size="mini"
+                    icon="el-icon-refresh-left"
+                    >恢复</el-button
+                >
+                <el-button
+                    v-if="!data.status && hid"
+                    @click="check(item.id, 'pass')"
+                    type="success"
+                    size="mini"
+                    icon="el-icon-check"
+                    >通过</el-button
+                >
+                <el-button
+                    v-if="!data.status && hid"
+                    @click="check(item.id, 'reject')"
+                    type="info"
+                    size="mini"
+                    icon="el-icon-close"
+                    >驳回</el-button
+                >
             </template>
         </div>
     </div>
@@ -122,7 +122,7 @@ export default {
             loading: false,
             data: "",
             stat: {},
-            isAdmin: User.getInfo().group >= 64,
+            isAdmin: User.isAdmin(),
             authors: [],
             types,
         };

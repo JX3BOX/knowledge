@@ -83,7 +83,7 @@ export default {
             });
             getRankPost(list.join(",")).then((res) => {
                 this.data = res.data.data.data;
-                console.log(this.data);
+                // console.log(this.data);
             });
         });
     },
