@@ -162,6 +162,7 @@ export default {
                     message: res.data.data || "操作成功",
                     type: "success",
                 });
+                location.reload()
             });
         },
     },
