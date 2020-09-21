@@ -46,6 +46,7 @@
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
         <div class="m-admin">
             <el-button
+                v-if="!hid"
                 class="u-btn"
                 type="primary"
                 @click="edit"
@@ -74,7 +75,7 @@
                 >
                 <el-button
                     v-if="!data.status && hid"
-                    @click="check(item.id, 'pass')"
+                    @click="check(hid, 'pass')"
                     type="success"
                     size="mini"
                     icon="el-icon-check"
@@ -82,7 +83,7 @@
                 >
                 <el-button
                     v-if="!data.status && hid"
-                    @click="check(item.id, 'reject')"
+                    @click="check(hid, 'reject')"
                     type="info"
                     size="mini"
                     icon="el-icon-close"
