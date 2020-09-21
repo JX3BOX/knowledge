@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { types } from "@jx3box/jx3box-data/data/common/wiki.json";
+import types from "@/assets/data/types.json";
 export default {
     name: "Nav",
     data: function() {

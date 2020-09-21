@@ -10,14 +10,21 @@
             @changePage="changePage"
         >
             <template slot="filter">
-                <a
-                    :href="publish_link"
-                    class="u-publish el-button el-button--primary el-button--small"
-                >
-                    + 创建百科词条
-                </a>
                 <!-- v-if="isAdmin" -->
-                <a @click.prevent="audit" class="u-publish el-button el-button--warning el-button--small"><i class="el-icon-warning-outline"></i> 待审核词条</a>
+                <el-select
+                    v-model="status"
+                    placeholder="请选择"
+                    size="medium"
+                    @change="loadPosts(1)"
+                >
+                    <el-option
+                        v-for="(label, status) in statusmap"
+                        :key="label"
+                        :label="label"
+                        :value="status"
+                    >
+                    </el-option>
+                </el-select>
                 <!-- 排序过滤 -->
                 <orderBy @filter="filter"></orderBy>
             </template>
@@ -64,13 +71,17 @@
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import _ from "lodash";
-import { getPosts } from "../service/post";
+import { getList, doAction } from "../service/post";
 import dateFormat from "../utils/dateFormat";
-import types from "@/assets/data/types.json";
-import { publishLink } from "@jx3box/jx3box-common/js/utils";
-import User from '@jx3box/jx3box-common/js/user'
+import types from "@jx3box/jx3box-data/data/common/wiki.json";
+import User from "@jx3box/jx3box-common/js/user";
+const statusmap = {
+    "0": "待审核",
+    "1": "已通过",
+    "2": "驳回",
+};
 export default {
-    name: "list",
+    name: "Audit",
     props: [],
     data: function() {
         return {
@@ -85,32 +96,18 @@ export default {
             order: "", //排序模式
             search: "",
             types,
-            isAdmin : User.isAdmin()
+
+            statusmap,
+            status: "0",
         };
-    },
-    computed: {
-        subtype: function() {
-            return this.$store.state.subtype;
-        },
-        params: function() {
-            let params = {
-                size: this.per,
-                page: this.page,
-                type: this.subtype,
-                keyword: this.search,
-            };
-            if(this.order){
-                params.order = this.order
-            }
-            return params;
-        },
-        publish_link: function(val) {
-            return publishLink("wiki");
-        },
     },
     methods: {
         loadPosts: function(i = 1, append = false) {
-            getPosts(this.params)
+            getList({
+                status: this.status,
+                page: i,
+                size: this.per,
+            })
                 .then((res) => {
                     this.setData(res.data.data, append);
                 })
@@ -141,22 +138,19 @@ export default {
             this.pages = data.last_page;
         },
         filter: function(o) {
-            if(o['val'] == 'podate'){
-                this.order = 'created_at'
-            }else if(o['val'] == 'update'){
-                this.order = 'updated_at'
-            }else{
-                this.order = ''
+            if (o["val"] == "podate") {
+                this.order = "created_at";
+            } else if (o["val"] == "update") {
+                this.order = "updated_at";
+            } else {
+                this.order = "";
             }
             this.loadPosts();
         },
-        audit : function (){
-            this.$router.push('audit')
-        }
     },
     filters: {
         postLink: function(id) {
-            return "./?pid=" + id;
+            return "./?hid=" + id;
         },
         tagFormat: function(tag) {
             return tag.join("、");

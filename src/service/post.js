@@ -5,6 +5,12 @@ function getPost(pid) {
     return axios.get(__bb + `api/wiki/${pid}`);
 }
 
+function getList(params) {
+    return $.get(__bb + "admin/wiki/user_item/", {
+        params: params,
+    });
+}
+
 function getUserPost(hid) {
     return $.get(__bb + "admin/wiki/user_item/" + hid);
 }
@@ -17,6 +23,15 @@ function getPosts(params) {
 function adminPost(pid, status) {
     return $.post(__bb + `admin/wiki/${pid}/check`, {
         status: status,
+    });
+}
+
+function doAction(id, action, desc) {
+    return $.post(__bb + `admin/wiki/user_item/${id}/approval`, "", {
+        params: {
+            status: action,
+            description: desc,
+        },
     });
 }
 
@@ -36,4 +51,13 @@ function getRankPost(list) {
     });
 }
 
-export { getPosts, getPost, adminPost, getUserPost, getAuthors, getRankPost };
+export {
+    getPosts,
+    getPost,
+    adminPost,
+    getUserPost,
+    getAuthors,
+    getRankPost,
+    getList,
+    doAction,
+};

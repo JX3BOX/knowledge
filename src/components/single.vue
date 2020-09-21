@@ -89,7 +89,7 @@ import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 import User from "@jx3box/jx3box-common/js/user";
-import { types } from "@jx3box/jx3box-data/data/common/wiki.json";
+import types from "@/assets/data/types.json";
 import {
     publishLink,
     authorLink,
