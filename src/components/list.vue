@@ -17,7 +17,7 @@
                     + 创建百科词条
                 </a>
                 <!-- v-if="isAdmin" -->
-                <a @click.prevent="audit" class="u-publish u-audit el-button el-button--warning el-button--small"><i class="el-icon-warning-outline"></i> 待审核词条<i class="u-pop"></i></a>
+                <a @click.prevent="audit" class="u-publish u-audit el-button el-button--warning el-button--small"><i class="el-icon-warning-outline"></i> 待审核词条<i class="u-pop" v-if="pnt"></i></a>
                 <!-- 排序过滤 -->
                 <orderBy @filter="filter"></orderBy>
             </template>
@@ -86,7 +86,7 @@ export default {
             search: "",
             types,
             isAdmin : User.isAdmin(),
-            pnt : true
+            pnt : false
         };
     },
     computed: {
@@ -156,7 +156,7 @@ export default {
         },
         getPendingCount : function (){
             getPendingCount().then((res) => {
-                this.pnt = !!res.data.data
+                this.pnt = !!~~res.data.data
             })
         }
     },
