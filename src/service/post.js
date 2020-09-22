@@ -5,19 +5,24 @@ function getPost(pid) {
     return axios.get(__bb + `api/wiki/${pid}`);
 }
 
-function getList(params) {
-    return $.get(__bb + "admin/wiki/user_item/", {
+function getPosts(params) {
+    return axios.get(__bb + "api/wiki/search/", {
         params: params,
     });
 }
 
 function getUserPost(hid) {
-    return $.get(__bb + "admin/wiki/user_item/" + hid);
+    return axios.get(__bb + "api/wiki/user_item/" + hid);
 }
-function getPosts(params) {
-    return axios.get(__bb + "api/wiki/search/", {
+
+function getUserPosts(params) {
+    return $.get(__bb + "admin/wiki/user_item/", {
         params: params,
     });
+}
+
+function getHistory(id) {
+    return axios.get(__bb + "api/wiki/" + id + "/history");
 }
 
 function adminPost(pid, status) {
@@ -26,13 +31,25 @@ function adminPost(pid, status) {
     });
 }
 
-function doAction(id, action, desc) {
+function checkPost(id, action, desc) {
     return $.post(__bb + `admin/wiki/user_item/${id}/approval`, "", {
         params: {
             status: action,
             description: desc,
         },
     });
+}
+
+function getRankPosts(list) {
+    return axios.get(__bb + "api/wiki/search/", {
+        params: {
+            list: list,
+        },
+    });
+}
+
+function getPendingCount() {
+    return $.get(__bb + "admin/wiki/user_item/pending_cnt");
 }
 
 function getAuthors(uids) {
@@ -43,21 +60,15 @@ function getAuthors(uids) {
     });
 }
 
-function getRankPost(list) {
-    return axios.get(__bb + "api/wiki/search/", {
-        params: {
-            list: list,
-        },
-    });
-}
-
 export {
     getPosts,
     getPost,
     adminPost,
     getUserPost,
     getAuthors,
-    getRankPost,
-    getList,
-    doAction,
+    getRankPosts,
+    getUserPosts,
+    checkPost,
+    getPendingCount,
+    getHistory,
 };

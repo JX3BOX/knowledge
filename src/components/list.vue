@@ -17,7 +17,7 @@
                     + 创建百科词条
                 </a>
                 <!-- v-if="isAdmin" -->
-                <a @click.prevent="audit" class="u-publish el-button el-button--warning el-button--small"><i class="el-icon-warning-outline"></i> 待审核词条</a>
+                <a @click.prevent="audit" class="u-publish u-audit el-button el-button--warning el-button--small"><i class="el-icon-warning-outline"></i> 待审核词条<i class="u-pop"></i></a>
                 <!-- 排序过滤 -->
                 <orderBy @filter="filter"></orderBy>
             </template>
@@ -64,7 +64,7 @@
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import _ from "lodash";
-import { getPosts } from "../service/post";
+import { getPosts,getPendingCount } from "../service/post";
 import dateFormat from "../utils/dateFormat";
 import types from "@/assets/data/types.json";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
@@ -85,7 +85,8 @@ export default {
             order: "", //排序模式
             search: "",
             types,
-            isAdmin : User.isAdmin()
+            isAdmin : User.isAdmin(),
+            pnt : true
         };
     },
     computed: {
@@ -152,6 +153,11 @@ export default {
         },
         audit : function (){
             this.$router.push('audit')
+        },
+        getPendingCount : function (){
+            getPendingCount().then((res) => {
+                this.pnt = !!res.data.data
+            })
         }
     },
     filters: {
@@ -164,6 +170,7 @@ export default {
     },
     created: function() {
         this.loadPosts(1);
+        if(this.isAdmin) this.getPendingCount()
     },
     components: {
         listbox,

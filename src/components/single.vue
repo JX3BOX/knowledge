@@ -2,36 +2,41 @@
     <div class="m-wiki-wrapper" v-loading="loading">
         <div class="m-wiki" v-if="data">
             <h1 class="u-title">{{ data.title }}</h1>
-            <div class="u-info" v-if="id">
+            <div class="u-info">
+                <QRcode class="u-info-item u-qrcode" />
                 <span class="u-info-item"
                     ><em class="u-label">类型</em
                     ><span class="u-value">{{ types[data.type] }}</span></span
                 >
-                <span class="u-info-item u-views"
-                    ><em class="u-label">热度</em
-                    ><span class="u-value">{{
-                        stat ? stat.views : "-"
-                    }}</span></span
-                >
-                <span class="u-info-item u-authors"
-                    ><em class="u-label">参与贡献</em>
-                    <span class="u-value"
-                        ><a
-                            class="u-author"
-                            v-for="(author, i) in authors"
-                            :key="i"
-                            :href="author.ID | authorLink"
-                            target="_blank"
-                        >
-                            <el-tooltip
-                                effect="dark"
-                                :content="author.display_name"
-                                placement="top"
+                <template v-if="id">
+                    <span class="u-info-item u-views"
+                        ><em class="u-label">热度</em
+                        ><span class="u-value">{{
+                            stat ? stat.views : "-"
+                        }}</span></span
+                    >
+                    <span class="u-info-item u-authors"
+                        ><em class="u-label">参与贡献</em>
+                        <span class="u-value"
+                            ><a
+                                class="u-author"
+                                v-for="(author, i) in authors"
+                                :key="i"
+                                :href="author.ID | authorLink"
+                                target="_blank"
                             >
-                                <img :src="showAvatar(author.user_avatar)" />
-                            </el-tooltip> </a
-                    ></span>
-                </span>
+                                <el-tooltip
+                                    effect="dark"
+                                    :content="author.display_name"
+                                    placement="top"
+                                >
+                                    <img
+                                        :src="showAvatar(author.user_avatar)"
+                                    />
+                                </el-tooltip> </a
+                        ></span>
+                    </span>
+                </template>
             </div>
             <Article :content="data.content" />
             <div class="u-meta">
@@ -40,9 +45,39 @@
                     {{ data.updated_at }}</time
                 >
             </div>
-            <!-- TODO:历史版本 -->
-            <el-divider content-position="left" v-if="id" >讨论</el-divider>
-            <Comment :id="id" category="wiki" v-if="id" />
+
+            <div class="m-history" v-if="id">
+                <h4 class="m-history-title">📄 历史版本</h4>
+                <div class="m-history-content">
+                    <table class="m-history-list">
+                        <tr>
+                            <th>版本</th>
+                            <th>更新时间</th>
+                            <th>贡献者</th>
+                            <th>修订说明</th>
+                        </tr>
+                        <tr
+                            class="u-item"
+                            v-for="(item, i) in history"
+                            :key="i"
+                        >
+                            <td>
+                                <a :href="item.id | versionLink" target="_blank"
+                                    >v{{ item.version }}</a
+                                >
+                            </td>
+                            <td>{{ item.created_at }}</td>
+                            <td v-html="showAuthor(item.user_id)"></td>
+                            <td>{{ item.remark || "无" }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <template v-if="id">
+                <el-divider content-position="left">讨论</el-divider>
+                <Comment :id="id" category="wiki" />
+            </template>
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
         <div class="m-admin">
@@ -104,7 +139,8 @@ import {
     adminPost,
     getUserPost,
     getAuthors,
-    doAction,
+    checkPost,
+    getHistory,
 } from "../service/post.js";
 import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
@@ -127,6 +163,8 @@ export default {
             isAdmin: User.isAdmin(),
             authors: [],
             types,
+            history: [],
+            contributors: {},
         };
     },
     computed: {
@@ -158,18 +196,28 @@ export default {
         },
         showAvatar: showAvatar,
         check: function(id, action) {
-            doAction(id, action, "不符合规范").then((res) => {
+            checkPost(id, action, "不符合规范").then((res) => {
                 this.$message({
                     message: res.data.data || "操作成功",
                     type: "success",
                 });
-                location.reload()
+                location.reload();
             });
+        },
+        showAuthor: function(uid) {
+            if (uid) {
+                return `<a href="${authorLink(uid)}">${
+                    this.contributors[uid]
+                }</a>`;
+            } else {
+                return "匿名";
+            }
         },
     },
     filters: {
-        authorLink: function(uid) {
-            return authorLink(uid);
+        authorLink,
+        versionLink: function(hid) {
+            return "/wiki/?hid=" + hid;
         },
     },
     created: function() {
@@ -184,11 +232,18 @@ export default {
                     uids = Array.from(uids).join(",");
                     getAuthors(uids).then((res) => {
                         this.authors = res.data.data.list;
+                        this.authors.forEach((author, i) => {
+                            this.contributors[author.ID] = author.display_name;
+                        });
                     });
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+
+            getHistory(this.id).then((res) => {
+                this.history = res.data.data;
+            });
 
             getStat(this.id).then((data) => {
                 if (data) this.stat = this.$store.state.stat = data;

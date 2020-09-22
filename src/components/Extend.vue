@@ -42,7 +42,7 @@
 
 <script>
 import { getRank } from "@/service/stat.js";
-import { getRankPost } from "@/service/post.js";
+import { getRankPosts } from "@/service/post.js";
 import { postLink} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "Extend",
@@ -81,7 +81,7 @@ export default {
                     this.views.push(item.value["7days"]);
                 }
             });
-            getRankPost(list.join(",")).then((res) => {
+            getRankPosts(list.join(",")).then((res) => {
                 this.data = res.data.data.data;
                 // console.log(this.data);
             });

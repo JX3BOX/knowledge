@@ -72,7 +72,7 @@
 <script>
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import _ from "lodash";
-import { getList } from "../service/post";
+import { getUserPosts } from "../service/post";
 import dateFormat from "../utils/dateFormat";
 import types from "@/assets/data/types.json";
 import User from "@jx3box/jx3box-common/js/user";
@@ -104,7 +104,7 @@ export default {
     },
     methods: {
         loadPosts: function(i = 1, append = false) {
-            getList({
+            getUserPosts({
                 status: this.status,
                 page: i,
                 size: this.per,
