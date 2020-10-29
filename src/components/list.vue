@@ -46,6 +46,7 @@
                         v-for="(item, i) in data"
                         :key="i"
                         :href="item.id | postLink"
+                        target="_blank"
                     >
                         <span class="u-title"
                             ><span class="u-type">{{ types[item.type] }}</span>
