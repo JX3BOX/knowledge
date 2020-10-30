@@ -24,7 +24,7 @@
             <!-- 搜索 -->
             <div class="m-archive-search" slot="search-before">
                 <el-input
-                    placeholder="请输入关键词"
+                    placeholder="请输入搜索内容"
                     v-model="search"
                     class="input-with-select"
                     @change="searchPosts"
