@@ -81,6 +81,7 @@
         </div>
         <el-alert v-else title="未找到该词条" type="info" show-icon> </el-alert>
         <div class="m-admin">
+            <Fav post-type="wiki" :post-id="id" />
             <el-button
                 v-if="!hid"
                 class="u-btn"
@@ -145,6 +146,7 @@ import {
 import { getStat, postStat } from "../service/stat.js";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
+import Fav from "@jx3box/jx3box-common-ui/src/Fav.vue";
 import User from "@jx3box/jx3box-common/js/user";
 import types from "@/assets/data/types.json";
 import {
@@ -266,6 +268,7 @@ export default {
     components: {
         Article,
         Comment,
+        Fav,
     },
 };
 </script>
