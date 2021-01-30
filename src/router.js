@@ -17,7 +17,7 @@ const routes = [
     // 常规
     {name: 'normal', path: '/:knowledge_type([a-z_]+)', component: Normal},
     // 单页
-    {name: 'view', path: '/view/:source_id([_\\d]+)/:post_id(\\d+)?', component: Detail},
+    {name: 'view', path: '/view/:source_id(\\d+)/:post_id(\\d+)?', component: Detail},
     // 默认页重定向
     {path: '*', redirect: 'home'}
 ];

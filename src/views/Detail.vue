@@ -1,5 +1,5 @@
 <template>
-  <div class="m-wiki-wrapper" v-loading="loading">
+  <div class="m-wiki-wrapper">
     <KnowledgeSingle v-if="source" :knowledge="source" :fav-enable="true" :deep="true"/>
     <div class="m-wiki" v-if="post">
       <div class="m-wiki-panel m-knowledge-panel">
@@ -50,7 +50,7 @@
     <div v-else class="m-wiki-null">
       <i class="el-icon-s-opportunity"></i>
       <span> 暂无内容，我要</span>
-      <a class="s-link" :href="publish_url(`knowledge/${source.id}`)">完善百科通识</a>
+      <a class="s-link" :href="publish_url(`knowledge/${id}`)">完善百科通识</a>
     </div>
   </div>
 </template>
@@ -65,8 +65,8 @@
     checkPost,
     getHistory,
   } from "../service/post.js";
-  import {getStat, postStat} from "../service/stat.js";
-  import {get_newest_post} from "../service/wiki_post";
+  import {postStat} from "../service/stat.js";
+  import {get_newest_post, get_post} from "../service/wiki_post";
   import author_url from "../filters/AuthorUrl";
   import date_format from "../filters/DateFormat";
   import publish_url from "../filters/PublishUrl";
@@ -74,27 +74,12 @@
   import Revisions from "../components/Revisions";
   import Article from "@jx3box/jx3box-editor/src/Article.vue";
   import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
-  import User from "@jx3box/jx3box-common/js/user";
-  import types from "@/assets/data/types.json";
-  import {
-    publishLink,
-    authorLink,
-    showAvatar,
-  } from "@jx3box/jx3box-common/js/utils";
 
   export default {
     name: "Detail",
     props: [],
     data: function () {
       return {
-        loading: false,
-        data: "",
-        stat: {},
-        isAdmin: User.isAdmin(),
-        authors: [],
-        types,
-        history: [],
-        contributors: {},
         post: null,
         source: null,
       };
@@ -102,9 +87,6 @@
     computed: {
       id: function () {
         return this.$route.params.source_id;
-      },
-      hid: function () {
-        return this.$store.state.hid;
       },
     },
     methods: {
@@ -115,62 +97,15 @@
         let target = document.querySelector(".c-comment");
         target.scrollIntoView(true);
       },
-      showAvatar: showAvatar,
-    },
-    filters: {
-      authorLink,
-      versionLink: function (hid) {
-        return "/knowledge/?hid=" + hid;
-      },
     },
     created: function () {
-      if (this.id) {
-        this.loading = true;
-        getPost(this.id)
-            .then((res) => {
-              this.data = res.data.data;
-              this.$store.state.status = true;
-
-              let uids = new Set(this.data.edited_user_ids);
-              uids = Array.from(uids).join(",");
-              getAuthors(uids).then((res) => {
-                this.authors = res.data.data.list;
-                this.authors.forEach((author, i) => {
-                  this.contributors[author.ID] = author.display_name;
-                });
-              });
-            })
-            .finally(() => {
-              this.loading = false;
-            });
-
-        getHistory(this.id).then((res) => {
-          this.history = res.data.data;
-        });
-
-        getStat(this.id).then((data) => {
-          if (data) this.stat = this.$store.state.stat = data;
-        });
-        postStat(this.id);
-      }
-
-      if (this.hid) {
-        this.loading = true;
-        getUserPost(this.hid)
-            .then((res) => {
-              this.data = res.data.data;
-              this.$store.state.status = true;
-            })
-            .finally(() => {
-              this.loading = false;
-            });
-      }
+      if (this.id) postStat(this.id);
     },
     components: {
-      Article,
-      Comment,
       KnowledgeSingle,
+      Article,
       Revisions,
+      Comment,
     },
     watch: {
       'id': {
@@ -187,17 +122,28 @@
                     if (this.source) this.source.post = this.post;
                   }
                 }
-            )
+            );
           }
         },
       },
-      /*"$route.params.post_id": {
+      "$route.params.post_id": {
         immediate: true,
         handler() {
-          // 获取物品攻略
-          this.get_item_post();
+          if (this.$route.params.post_id) {
+            // 获取指定攻略
+            get_post(this.$route.params.post_id).then(
+                (res) => {
+                  res = res.data;
+                  if (res.code === 200) {
+                    this.post = res.data.post;
+                    this.source = res.data.source;
+                    if (this.source) this.source.post = this.post;
+                  }
+                }
+            );
+          }
         },
-      },*/
+      },
     },
   };
 </script>
