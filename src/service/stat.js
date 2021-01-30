@@ -2,7 +2,7 @@ import { $next } from "@jx3box/jx3box-common/js/axios";
 
 function getStat(id) {
     return $next
-        .get("api/summary-any/" + "wiki-" + id + "/stat")
+        .get("api/summary-any/" + "knowledge-" + id + "/stat")
         .then((res) => {
             return res.data;
         })
@@ -12,9 +12,9 @@ function getStat(id) {
 }
 
 function postStat(id) {
-    return $next.get("api/summary-any/" + "wiki-" + id, {
+    return $next.get("api/summary-any/" + "knowledge-" + id, {
         params: {
-            type: "wiki",
+            type: "knowledge",
             actions: "views",
         },
     });
@@ -22,7 +22,7 @@ function postStat(id) {
 function getRank() {
     return $next.get("api/summary/visit/rank", {
         params: {
-            postType: "wiki",
+            postType: "knowledge",
             postAction: "views",
             pageSize: 20,
         },

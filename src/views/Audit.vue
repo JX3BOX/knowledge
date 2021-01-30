@@ -73,7 +73,6 @@
 import listbox from "@jx3box/jx3box-page/src/cms-list.vue";
 import _ from "lodash";
 import { getUserPosts } from "../service/post";
-import dateFormat from "../utils/dateFormat";
 import types from "@/assets/data/types.json";
 import User from "@jx3box/jx3box-common/js/user";
 const statusmap = {
@@ -167,5 +166,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/list.less";
+@import "../assets/css/views/normal.less";
 </style>

@@ -10,6 +10,9 @@ let store = {
 
         // 列表
         subtype : '',
+        sidebar : {
+            knowledge_type: null,
+        },
 
         // 单页
         hid:0,

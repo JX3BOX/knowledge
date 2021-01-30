@@ -18,12 +18,12 @@
                     svg-inline
                     src="../assets/img/side/rank.svg"
                 />
-                热门词条
+                热门通识
                 <!-- <router-link class="u-more" to="/rank">完整榜单 &raquo;</router-link> -->
             </h3>
             <ul class="m-rank-list" v-if="data.length">
                 <li v-for="(item, i) in data" :key="i">
-                    <a class="u-link" :href="item.id | postLink">
+                    <a class="u-link">
                         <span class="u-order" :class="highlight(i)">{{
                             i + 1
                         }}</span>
@@ -43,7 +43,6 @@
 <script>
 import { getRank } from "@/service/stat.js";
 import { getRankPosts } from "@/service/post.js";
-import { postLink} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "Extend",
     props: [],
@@ -65,17 +64,12 @@ export default {
             }
         },
     },
-    filters : {
-        postLink : function (id){
-            return postLink('wiki',id)
-        }
-    },
     mounted: function() {
         getRank().then((res) => {
             let result = res.data;
             let list = [];
             result.forEach((item) => {
-                if (item.name.startsWith("wiki")) {
+                if (item.name.startsWith("knowledge")) {
                     let id = item.name.split("-").pop();
                     list.push(id);
                     this.views.push(item.value["7days"]);

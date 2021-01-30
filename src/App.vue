@@ -1,26 +1,24 @@
 <template>
-    <div id="app" :class="{ 'p-list': mode == 'list', 'p-single': mode == 'single' }">
+    <div id="app">
         <Header></Header>
         <Breadcrumb
-            name="剑三百科"
-            slug="wiki"
-            root="/wiki"
+            name="通识百科"
+            slug="knowledge"
+            root="/knowledge"
             :publishEnable="true"
             :adminEnable="false"
             :feedbackEnable="true"
         >
-            <img slot="logo" svg-inline src="./assets/img/wiki.svg" />
+            <img slot="logo" svg-inline src="./assets/img/knowledge.svg" />
             <Info />
         </Breadcrumb>
         <LeftSidebar>
             <Nav />
         </LeftSidebar>
         <Main :withoutRight="false">
-            <single v-if="mode == 'single'" />
-            <div class="m-main" v-else>
-                <!-- <tabs /> -->
-                <router-view />
-            </div>
+            <!-- 路由页面内容 -->
+            <router-view />
+            <!-- 右侧咨询 -->
             <RightSidebar>
                 <Extend />
             </RightSidebar>
@@ -33,22 +31,10 @@
 import Info from "@/components/Info.vue";
 import Nav from "@/components/Nav.vue";
 import Extend from "@/components/Extend.vue";
-// import tabs from "@/components/tabs";
-import single from "@/components/single.vue";
 import {getRewrite} from '@jx3box/jx3box-common/js/utils'
 
 export default {
     name: "App",
-    props: [],
-    data: function() {
-        return {};
-    },
-    computed: {
-        mode: function() {
-            return this.$store.state.mode;
-        },
-    },
-    methods: {},
     beforeCreate: function() {
         let params = new URLSearchParams(location.search);
         this.$store.state.pid = params.get("pid") || getRewrite("pid");
@@ -57,15 +43,27 @@ export default {
 
         // 根据情况选择subtype取值
         this.$store.state.subtype = getRewrite("subtype");
-        // this.$store.state.subtype = this.$route.params.subtype;
     },
     components: {
         Info,
         Nav,
         Extend,
         // tabs,
-        single
     },
+    watch: {
+        $route: {
+            immediate: true,
+            handler() {
+                if (
+                    typeof this.$route.params.knowledge_type === 'undefined'
+                ) {
+                    this.$store.state.sidebar.knowledge_type = null;
+                }else {
+                    this.$store.state.sidebar.knowledge_type = this.$route.params.knowledge_type ? this.$route.params.knowledge_type : '';
+                }
+            }
+        },
+    }
 };
 </script>
 
