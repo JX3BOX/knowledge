@@ -1,5 +1,6 @@
 <template>
   <div class="m-wiki-wrapper">
+    <Search />
     <KnowledgeSingle v-if="source" :knowledge="source" :fav-enable="true" :deep="true"/>
     <div class="m-wiki" v-if="post">
       <div class="m-wiki-panel m-knowledge-panel">
@@ -56,15 +57,6 @@
 </template>
 
 <script>
-  // 数据服务
-  import {
-    getPost,
-    adminPost,
-    getUserPost,
-    getAuthors,
-    checkPost,
-    getHistory,
-  } from "../service/post.js";
   import {postStat} from "../service/stat.js";
   import {get_newest_post, get_post} from "../service/wiki_post";
   import author_url from "../filters/AuthorUrl";
@@ -72,6 +64,7 @@
   import publish_url from "../filters/PublishUrl";
   import KnowledgeSingle from "../components/KnowledgeSingle";
   import Revisions from "../components/Revisions";
+  import Search from "../components/Search";
   import Article from "@jx3box/jx3box-editor/src/Article.vue";
   import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 
@@ -106,6 +99,7 @@
       Article,
       Revisions,
       Comment,
+      Search,
     },
     watch: {
       'id': {

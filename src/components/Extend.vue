@@ -1,5 +1,5 @@
 <template>
-    <div class="m-extend">
+    <div class="m-extend-panel">
         <!-- 群号 -->
         <RightSideMsg>
             <em>休闲党交流群</em> :
@@ -86,6 +86,7 @@ export default {
 </script>
 
 <style lang="less">
+    @import "../assets/css/components/extend.less";
 @import "../assets/css/side.less";
 @import "../assets/css/rank.less";
 </style>

@@ -16,6 +16,13 @@ function get_menu_list(params) {
   })
 }
 
+function get_list(params) {
+  return $http.get(`${__helperUrl}api/knowledges`, {
+    headers: {Accept: "application/prs.helper.v2+json"},
+    params: params,
+  });
+}
+
 export {
-  get_menus, get_menu_list,
+  get_menus, get_menu_list, get_list,
 };

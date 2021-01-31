@@ -1,13 +1,13 @@
 <template>
   <div class="m-wiki-wrapper">
-    <Search/>
+    <search-bar />
     <!-- 列表 -->
     <div class="m-wiki-list" v-if="sources && sources.length">
       <KnowledgeSingle v-for="(source, i) in sources" :key="i" :knowledge="source"/>
     </div>
     <el-pagination
         background
-        :total="sources_total"
+        :total="total"
         hide-on-single-page
         layout="prev, pager, next"
         :current-page="page"
@@ -20,58 +20,59 @@
 </template>
 
 <script>
-  import {get_menu_list} from "../service/knowledge";
+  import {get_list} from '../service/knowledge';
   import KnowledgeSingle from "../components/KnowledgeSingle";
-  import Search from "../components/Search";
+  import Search from '../components/Search.vue';
 
   export default {
-    name: "list",
+    name: "Search",
     props: [],
     data: function () {
       return {
-        sources: null,
-        sources_total: 0,
+        sources: [],
+        total: 0,
         page: 1,
-        length: 20,
+        length: 15,
       };
     },
     methods: {
       page_change_handle(page) {
         this.$router.push({
-          name: "normal",
+          name: "search",
+          params: {keyword: this.$route.params.keyword},
           query: {page: page},
         });
       },
     },
     components: {
-      Search,
       KnowledgeSingle,
+      'search-bar': Search,
     },
     watch: {
       $route: {
         immediate: true,
         handler() {
           this.page = parseInt(this.$route.query.page);
-          // 获取菜单下通识列表
-          get_menu_list({
-            limit: this.length,
+
+          get_list({
+            ids: this.$route.query.ids ? this.$route.query.ids.split(',') : [],
+            keyword: this.$route.params.keyword,
             page: this.page,
-            knowledge_type: this.$store.state.sidebar.knowledge_type,
+            limit: this.length
           }).then(
-              (res) => {
-                res = res.data;
-                if (res.code === 200) {
-                  this.sources = res.data.data;
-                  this.sources_total = res.data.total;
-                }
+            (data) => {
+              data = data.data;
+              if (data.code === 200) {
+                this.sources = data.data.data;
+                this.total = data.data.total;
+              } else {
+                this.sources = null;
+                this.total = 0;
               }
+            }
           );
-        }
-      }
-    }
+        },
+      },
+    },
   };
 </script>
-
-<style lang="less">
-  @import "../assets/css/views/normal.less";
-</style>
