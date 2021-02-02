@@ -19,7 +19,7 @@ const routes = [
     // 搜索
     {name: 'search', path: '/search/:keyword(.*)', component: Search},
     // 默认页重定向
-    {path: '*', redirect: 'home'}
+    {path: '*', redirect: 'search/'}
 ];
 
 const router = new VueRouter({
