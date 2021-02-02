@@ -48,7 +48,7 @@
         history.back();
       },
       add_handle() {
-        location.href = publish_url('knowledge');
+        location.href = this.publish_url('knowledge');
       },
       search_handle() {
         this.$router.push({

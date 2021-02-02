@@ -39,7 +39,7 @@
 <script>
   import {postStat} from "@jx3box/jx3box-common/js/stat";
   import {WikiPost} from "@jx3box/jx3box-common/js/helper";
-  import {authorLink, publishLink, ts2str} from "@jx3box/jx3box-common/js/utils";
+  import {publishLink} from "@jx3box/jx3box-common/js/utils";
   import KnowledgeSingle from "../components/KnowledgeSingle";
   import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
   import WikiRevisions from "@jx3box/jx3box-common-ui/src/WikiRevisions";
@@ -61,13 +61,7 @@
       },
     },
     methods: {
-      author_url: authorLink,
       publish_url: publishLink,
-      date_format: ts2str,
-      go_to_comment() {
-        let target = document.querySelector(".c-comment");
-        target.scrollIntoView(true);
-      },
     },
     created: function () {
       if (this.id) postStat('knowledge', this.id);
