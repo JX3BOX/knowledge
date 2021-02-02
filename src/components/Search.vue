@@ -33,7 +33,8 @@
 </template>
 
 <script>
-  import publish_url from "../filters/PublishUrl";
+  import {publishLink} from "@jx3box/jx3box-common/js/utils";
+
   export default {
     name: "Search",
     data() {
@@ -42,7 +43,7 @@
       };
     },
     methods: {
-      publish_url,
+      publish_url: publishLink,
       return_handle() {
         history.back();
       },

@@ -1,27 +1,22 @@
 <template>
   <div class="m-home-view">
     <Search />
-    <div class="m-wiki-panel no-border">
-      <div class="m-head">
-        <h4 class="u-title">
-          <i class="el-icon-location-information"></i>
-          <span> 便捷入口</span>
-        </h4>
-        <div class="u-other">
-          <a class="u-more" target="_blank" :href="feedback"
-          >反馈建议 &raquo;</a
-          >
-        </div>
-      </div>
-      <div class="m-body">
-        主页
-      </div>
-    </div>
+    <WikiPanel :border-none="true">
+      <template slot="head-title">
+        <i class="el-icon-location-information"></i>
+        <span>便捷入口</span>
+      </template>
+      <template slot="head-actions">
+        <a class="u-more" target="_blank" :href="feedback">反馈建议 &raquo;</a>
+      </template>
+      <template slot="body">主页</template>
+    </WikiPanel>
   </div>
 </template>
 
 <script>
   import Search from "../components/Search";
+  import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
 
   const {JX3BOX} = require("@jx3box/jx3box-common");
   export default {
@@ -33,7 +28,8 @@
       };
     },
     components: {
-      Search
+      Search,
+      WikiPanel,
     }
   };
 </script>

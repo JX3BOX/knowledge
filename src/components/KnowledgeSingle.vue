@@ -19,14 +19,14 @@
 
 <script>
   import _ from "lodash";
-  import date_format from "../filters/DateFormat";
+  import {ts2str} from "@jx3box/jx3box-common/js/utils";
   import Fav from "@jx3box/jx3box-common-ui/src/Fav";
 
   export default {
     name: "KnowledgeSingle",
     props: ["knowledge", "favEnable", 'deep'],
     methods: {
-      date_format,
+      date_format: ts2str,
     },
     computed: {
       tags() {

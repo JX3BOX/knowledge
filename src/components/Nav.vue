@@ -8,13 +8,25 @@
           <span>{{ label }}</span>
         </router-link>
       </li>
+      <li>
+        <a :href="moduleUrl('cj')">
+          <img svg-inline src="../assets/img/achievement.svg"/>
+          <span>成就</span>
+        </a>
+      </li>
+      <li>
+        <a :href="moduleUrl('item')">
+          <img svg-inline src="../assets/img/item.svg"/>
+          <span>物品</span>
+        </a>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
   import {get_menus} from '../service/knowledge';
-  import {__imgPath} from '@jx3box/jx3box-common/js/jx3box.json'
+  import {__imgPath, __Root} from '@jx3box/jx3box-common/js/jx3box.json'
 
   export default {
     name: "Nav",
@@ -29,6 +41,9 @@
       },
     },
     methods: {
+      moduleUrl(type) {
+        return __Root + type;
+      },
       isActive: function (subtype) {
         return subtype == this.subtype;
       },
