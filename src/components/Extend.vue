@@ -81,10 +81,10 @@ export default {
             get_list({
                 ids: list,
             }).then((res) => {
-                res.data.data.data.forEach((item,i) => {
-                    if(item){
-                        item.views = this.views[i]
-                        this.data.push(item)
+                res.data.data.data.forEach((item, i) => {
+                    if (item) {
+                        item.views = this.views[i];
+                        this.data.push(item);
                     }
                 });
             });
