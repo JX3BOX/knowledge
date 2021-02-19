@@ -5,19 +5,21 @@
         <router-link :to="{name: 'normal', params: {knowledge_type: type.name}}" :class="{ on: isActive(type.name) }">
           <img :src="type.name | knowledgeIconURL"/>
           <span v-text="type.label"></span>
-          <span v-if="type.count" v-text="` (${type.count})`"></span>
+          <span class="u-count" v-if="type.count" v-text="`(${type.count})`"></span>
         </router-link>
       </li>
       <li>
         <a :href="moduleUrl('cj')">
           <img svg-inline src="../assets/img/achievement.svg"/>
-          <span>成就 »</span>
+          <span>成就</span>
+          <span class="u-count">»</span>
         </a>
       </li>
       <li>
         <a :href="moduleUrl('item')">
           <img svg-inline src="../assets/img/item.svg"/>
-          <span>物品 »</span>
+          <span>物品</span>
+          <span class="u-count">»</span>
         </a>
       </li>
     </ul>
