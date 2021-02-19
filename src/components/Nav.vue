@@ -11,7 +11,7 @@
                 >
                     <!-- <img :src="type.name | knowledgeIconURL" /> -->
                     <i class="u-icon" :class="icons[type.name]"></i>
-                    <span v-text="type.label"></span>
+                    <span class="u-name" v-text="type.label"></span>
                     <span
                         class="u-count"
                         v-if="type.count"
@@ -40,22 +40,13 @@
 <script>
 import { get_menus } from "../service/knowledge";
 import { __imgPath, __Root } from "@jx3box/jx3box-common/js/jx3box.json";
-
+import icons from '@/assets/data/icons.json'
 export default {
     name: "Nav",
     data: function() {
         return {
             types: [],
-            icons: {
-                game : 'el-icon-orange',
-                jargon : 'el-icon-postcard',
-                plot : 'el-icon-collection',
-                bigbang : 'el-icon-mic',
-                gossip : 'el-icon-film',
-                organization : 'el-icon-school',
-                player : 'el-icon-user',
-                other : 'el-icon-more-outline',
-            },
+            icons: icons,
         };
     },
     computed: {
