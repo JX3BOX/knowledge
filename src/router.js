@@ -11,8 +11,8 @@ Vue.use(VueRouter);
 
 const routes = [
     // 主页
-    { name: 'home', path: '/home', component: Home },
-    // 常规
+    { name: 'home', path: '/', component: Home },
+    // 列表
     {name: 'normal', path: '/type/:knowledge_type([a-z_]+)', component: Normal},
     // 单页
     {name: 'view', path: '/view/:source_id(\\d+)/:post_id(\\d+)?', component: Detail},

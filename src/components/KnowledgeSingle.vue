@@ -9,7 +9,7 @@
                 {{ knowledge.label }}
             </span>
             <span class="u-key" v-text="knowledge.name"></span>
-            <span class="u-id">
+            <span class="u-id" v-if="deep">
                 ( <span>词条ID : </span> <span>{{ knowledge.id }}</span
                 > )
             </span>

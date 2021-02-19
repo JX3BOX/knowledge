@@ -17,7 +17,7 @@
                     <span class="u-title">{{ knowledge.name }}</span>
                 </div>
                 <div class="u-tags" v-if="hasTag(knowledge)">
-                    <i class="el-icon-collection-tag"></i>
+                    <i class="el-icon-price-tag"></i>
                     {{ knowledge | showTag }}
                 </div>
                 <span class="u-remark">
