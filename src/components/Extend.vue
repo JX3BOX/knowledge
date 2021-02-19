@@ -18,8 +18,15 @@
                     svg-inline
                     src="../assets/img/side/rank.svg"
                 />
-                综合榜
+                热门榜
             </h3>
+            <el-tabs v-model="tab">
+                <el-tab-pane label="全部" name="knowledge"></el-tab-pane>
+                <el-tab-pane label="事件" name="bigbang"></el-tab-pane>
+                <el-tab-pane label="八卦" name="gossip"></el-tab-pane>
+                <el-tab-pane label="组织" name="organization"></el-tab-pane>
+                <el-tab-pane label="玩家" name="player"></el-tab-pane>
+            </el-tabs>
             <ul class="m-rank-list" v-if="data && data.length">
                 <li v-for="(item, i) in data" :key="i">
                     <router-link
@@ -51,6 +58,7 @@ export default {
     props: [],
     data: function() {
         return {
+            tab: "knowledge",
             data: [],
             views: [],
         };
@@ -66,29 +74,47 @@ export default {
                 return "t3";
             }
         },
-    },
-    mounted: function() {
-        getStatRank("knowledge").then((res) => {
-            let result = res.data;
-            let list = [];
-            result.forEach((item) => {
-                if (item.name.startsWith("knowledge")) {
-                    let id = item.name.split("-").pop();
-                    list.push(id);
-                    this.views.push(item.value["7days"]);
+        loadData: function() {
+            let type = this.tab
+            getStatRank(type).then((res) => {
+                let result = res && res.data;
+                if (result && result.length) {
+                    let list = [];
+                    let views = [];
+                    result.forEach((item) => {
+                        if (item.name.startsWith(type)) {
+                            let id = item.name.split("-").pop();
+                            list.push(id);
+                            views.push(item.value["7days"]);
+                        }
+                    });
+                    this.views = views;
+
+                    let data = [];
+                    get_list({
+                        ids: list,
+                    }).then((res) => {
+                        res.data.data.data.forEach((item, i) => {
+                            if (item) {
+                                item.views = this.views[i];
+                                data.push(item);
+                            }
+                        });
+                        this.data = data;
+                    });
+                }else{
+                    this.data = []
                 }
             });
-            get_list({
-                ids: list,
-            }).then((res) => {
-                res.data.data.data.forEach((item, i) => {
-                    if (item) {
-                        item.views = this.views[i];
-                        this.data.push(item);
-                    }
-                });
-            });
-        });
+        },
+    },
+    watch:{
+        tab : function (){
+            this.loadData();
+        }
+    },
+    mounted: function() {
+        this.loadData();
     },
     components: {},
 };
