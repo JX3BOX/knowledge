@@ -5,12 +5,18 @@
         :to="{ name: 'view', params: { source_id: knowledge.id } }"
     >
         <div class="u-name">
-            <span class="u-type" v-text="knowledge.label"></span>
-            <span v-text="knowledge.name"></span>
-            <div class="u-updated" v-if="updated">
+            <span class="u-type">
+                {{ knowledge.label }}
+            </span>
+            <span class="u-key" v-text="knowledge.name"></span>
+            <span class="u-id">
+                ( <span>词条ID : </span> <span>{{ knowledge.id }}</span
+                > )
+            </span>
+            <!-- <div class="u-updated" v-if="updated">
                 <i class="el-icon-refresh"></i>
                 <span> 最后更新于 {{ date_format(updated) }}</span>
-            </div>
+            </div> -->
         </div>
         <div class="u-desc" v-if="tags" v-text="tags.join('、')"></div>
         <div class="u-meta">

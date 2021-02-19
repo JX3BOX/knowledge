@@ -18,7 +18,7 @@
                     svg-inline
                     src="../assets/img/side/rank.svg"
                 />
-                热门通识
+                综合榜
             </h3>
             <ul class="m-rank-list" v-if="data && data.length">
                 <li v-for="(item, i) in data" :key="i">
