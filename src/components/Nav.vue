@@ -1,23 +1,23 @@
 <template>
   <nav class="m-nav">
     <ul class="m-nav-list">
-      <!-- <li><a href="./?subtype=" :class="{ on: !subtype }">全部</a></li> -->
-      <li v-for="(label, type) in types" :key="type">
-        <router-link :to="{name: 'normal', params: {knowledge_type: type}}" :class="{ on: isActive(type) }">
-          <img :src="type | knowledgeIconURL"/>
-          <span>{{ label }}</span>
+      <li v-for="(type, key) in types" :key="key">
+        <router-link :to="{name: 'normal', params: {knowledge_type: type.name}}" :class="{ on: isActive(type.name) }">
+          <img :src="type.name | knowledgeIconURL"/>
+          <span v-text="type.label"></span>
+          <span v-if="type.count" v-text="` (${type.count})`"></span>
         </router-link>
       </li>
       <li>
         <a :href="moduleUrl('cj')">
           <img svg-inline src="../assets/img/achievement.svg"/>
-          <span>成就</span>
+          <span>成就 »</span>
         </a>
       </li>
       <li>
         <a :href="moduleUrl('item')">
           <img svg-inline src="../assets/img/item.svg"/>
-          <span>物品</span>
+          <span>物品 »</span>
         </a>
       </li>
     </ul>

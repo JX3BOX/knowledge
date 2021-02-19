@@ -23,6 +23,12 @@ function get_list(params) {
   });
 }
 
+function get_count(){
+  return $http.get(`${__helperUrl}api/knowledges/count`, {
+    headers: {Accept: "application/prs.helper.v2+json"},
+  });
+}
+
 export {
-  get_menus, get_menu_list, get_list,
+  get_menus, get_menu_list, get_list, get_count,
 };

@@ -1,33 +1,33 @@
 <template>
-    <div class="m-info">
-        <div class="m-info-notice">
-            <!-- <span class="u-item" href="/macro/#/">🌈 测试版上线</span> -->
-            <!-- <span class="u-item" href="/macro/#/">🌈 <span>即将上线</span> · 私人宏仓库</span> -->
-            <!-- <span class="u-item" href="/macro/#/">✨ <span>即将上线</span> · 云端宏一键同步</span> -->
-            <!-- <span class="u-item" href="/house/#/rank">⚽️ <span>即将上线</span> · 云端宏排行榜</span> -->
-        </div>
-
-        <!-- <div class="m-info-router">
-            <router-link to="/"><i class="el-icon-collection"></i></router-link>
-            <router-link to="/rank"><i class="el-icon-s-data"></i></router-link>
-            <router-link to="/bucket"><i class="el-icon-receiving"></i></router-link>
-        </div> -->
+  <div class="m-info">
+    <div class="u-stat">
+      <span><em>收录通识数</em><b v-text="count.total"></b></span>
+      <span><em>收录文章数</em><b v-text="count.posts_total"></b></span>
     </div>
+  </div>
 </template>
 
 <script>
+import {get_count} from '../service/knowledge';
 export default {
-    name: "Info",
-    props: [],
-    data: function() {
-        return {};
-    },
-    computed: {},
-    methods: {},
-    mounted: function() {}
+  name: "Info",
+  data: function () {
+    return {
+      count: {},
+    };
+  },
+  created() {
+    // 获取通识统计信息
+    get_count().then(
+        (data) => {
+          data = data.data;
+          if (data.code === 200) this.count = data.data;
+        }
+    );
+  }
 };
 </script>
 
 <style lang="less">
-@import '../assets/css/info.less';
+@import '../assets/css/components/info.less';
 </style>
