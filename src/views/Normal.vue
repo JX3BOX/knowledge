@@ -60,7 +60,7 @@ export default {
             sources: [],
             sources_total: 0,
             page: 1,
-            length: 20,
+            length: 15,
 
             icons: icons,
             date_format: ts2str,

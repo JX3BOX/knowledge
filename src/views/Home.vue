@@ -247,7 +247,7 @@ export default {
             });
         },
         loadHotPlots: function() {
-          getStatRank('plot').then((res) => {
+          getStatRank('plot','views',18).then((res) => {
             res = res.data;
             this.hot_plot_views = [];
             let source_ids = [];
