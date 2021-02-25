@@ -20,9 +20,8 @@
                     <i class="el-icon-price-tag"></i>
                     {{ knowledge | showTag }}
                 </div>
-                <span class="u-remark">
-                    <i class="el-icon-edit"></i>最后修订：{{
-                        knowledge.post.remark
+                <span class="u-remark" v-if="knowledge.post">
+                    <i class="el-icon-edit"></i>最后修订：{{knowledge.post.remark
                     }}
                     @{{ knowledge.post.user_nickname }}
                 </span>
