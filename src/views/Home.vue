@@ -15,13 +15,13 @@
             <template slot="body">
                 <ul class="u-qlinks">
                     <li class="u-qlink">
-                        <a href="/cj">
+                        <a href="/cj" target="_blank">
                             <i class="el-icon-medal"></i>
                             <span> 成就百科</span>
                         </a>
                     </li>
                     <li class="u-qlink">
-                        <a href="/item">
+                        <a href="/item" target="_blank">
                             <i class="el-icon-apple"></i>
                             <span> 物品百科</span>
                         </a>
