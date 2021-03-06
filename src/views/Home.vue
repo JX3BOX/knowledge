@@ -17,7 +17,7 @@
                     <li class="u-qlink">
                         <a href="/cj">
                             <i class="el-icon-medal"></i>
-                            <span> 物品百科</span>
+                            <span> 成就百科</span>
                         </a>
                     </li>
                     <li class="u-qlink">
