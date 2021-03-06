@@ -1,6 +1,35 @@
 <template>
     <div class="m-home-view">
         <Search />
+
+        <WikiPanel :border-none="true">
+            <template slot="head-title">
+                <i class="el-icon-location-information"></i>
+                <span> 便捷入口</span>
+            </template>
+            <template slot="head-actions">
+                <a class="other" target="_blank" :href="feedback"
+                    >反馈建议 &raquo;</a
+                >
+            </template>
+            <template slot="body">
+                <ul class="u-qlinks">
+                    <li class="u-qlink">
+                        <a href="/cj">
+                            <i class="el-icon-medal"></i>
+                            <span> 物品百科</span>
+                        </a>
+                    </li>
+                    <li class="u-qlink">
+                        <a href="/item">
+                            <i class="el-icon-apple"></i>
+                            <span> 物品百科</span>
+                        </a>
+                    </li>
+                </ul>
+            </template>
+        </WikiPanel>
+
         <WikiPanel :border-none="true">
             <template slot="head-title">
                 <i class="el-icon-orange"></i>

@@ -1,6 +1,24 @@
 <template>
     <nav class="m-nav">
         <ul class="m-nav-list" v-if="types">
+            <li>
+                <a href="/cj" target="_blank">
+                    <i class="u-icon el-icon-medal"></i>
+                    <span class="u-name">成就</span>
+                </a>
+            </li>
+            <li>
+                <a href="/item" target="_blank">
+                    <i class="u-icon el-icon-apple"></i>
+                    <span class="u-name">物品</span>
+                </a>
+            </li>
+            <!-- <li>
+                <a href="/quest" target="_blank">
+                    <i class="u-icon el-icon-collection-tag"></i>
+                    <span class="u-name">任务</span>
+                </a>
+            </li> -->
             <li v-for="(type, key) in types" :key="key">
                 <router-link
                     :to="{
@@ -19,20 +37,6 @@
                     ></span>
                 </router-link>
             </li>
-            <!-- <li>
-                <a :href="moduleUrl('cj')">
-                    <img svg-inline src="../assets/img/achievement.svg" />
-                    <span>成就</span>
-                    <span class="u-count">»</span>
-                </a>
-            </li>
-            <li>
-                <a :href="moduleUrl('item')">
-                    <img svg-inline src="../assets/img/item.svg" />
-                    <span>物品</span>
-                    <span class="u-count">»</span>
-                </a>
-            </li> -->
         </ul>
     </nav>
 </template>
@@ -40,7 +44,7 @@
 <script>
 import { get_menus } from "../service/knowledge";
 import { __imgPath, __Root } from "@jx3box/jx3box-common/js/jx3box.json";
-import icons from '@/assets/data/icons.json'
+import icons from "@/assets/data/icons.json";
 export default {
     name: "Nav",
     data: function() {
