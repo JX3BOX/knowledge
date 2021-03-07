@@ -4,7 +4,7 @@ const { __helperUrl } = require("@jx3box/jx3box-common/js/jx3box.json");
 const qs = require("qs");
 
 function get_menus(params) {
-    return axios.get(`${__helperUrl}api/knowledge/menus`, {
+    return $http.get(`${__helperUrl}api/knowledge/menus`, {
         headers: { Accept: "application/prs.helper.v2+json" },
     });
 }

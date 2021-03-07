@@ -5,12 +5,22 @@
                 <a href="/cj" target="_blank">
                     <i class="u-icon el-icon-medal"></i>
                     <span class="u-name">成就</span>
+                    <span
+                        class="u-count"
+                        v-if="achievement_count"
+                        v-text="`(${achievement_count})`"
+                    ></span>
                 </a>
             </li>
             <li>
                 <a href="/item" target="_blank">
                     <i class="u-icon el-icon-apple"></i>
                     <span class="u-name">物品</span>
+                    <span
+                        class="u-count"
+                        v-if="item_count"
+                        v-text="`(${item_count})`"
+                    ></span>
                 </a>
             </li>
             <!-- <li>
@@ -43,6 +53,8 @@
 
 <script>
 import { get_menus } from "../service/knowledge";
+import { get_count as get_achievement_count } from "../service/achievement";
+import { get_count as get_item_count } from "../service/item";
 import { __imgPath, __Root } from "@jx3box/jx3box-common/js/jx3box.json";
 import icons from "@/assets/data/icons.json";
 export default {
@@ -51,6 +63,8 @@ export default {
         return {
             types: [],
             icons: icons,
+            achievement_count: 0,
+            item_count: 0,
         };
     },
     computed: {
@@ -71,10 +85,24 @@ export default {
             return __imgPath + "image/wiki/" + type + ".svg";
         },
     },
-    mounted() {
+    created() {
         get_menus().then((data) => {
             data = data.data;
             if (data.code === 200) this.types = data.data.menus;
+        });
+
+        get_achievement_count().then((data) => {
+            data = data.data;
+            if (data.code === 200) {
+                this.achievement_count = data.data.count.general + data.data.count.armor;
+            }
+        });
+
+        get_item_count().then((data) => {
+            data = data.data;
+            if (data.code === 200) {
+                this.item_count = data.data.total;
+            }
         });
     },
 };
