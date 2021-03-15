@@ -212,7 +212,7 @@
 
 <script>
 const { JX3BOX } = require("@jx3box/jx3box-common");
-import { feedback } from "@jx3box/jx3box-common/js/jx3box.json";
+import { feedback } from "@jx3box/jx3box-common/data/jx3box.json";
 import Search from "../components/Search";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
 import {WikiPost} from "@jx3box/jx3box-common/js/helper";

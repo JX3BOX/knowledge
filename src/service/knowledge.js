@@ -1,6 +1,6 @@
 import { $ as $http, axios } from "./axios";
 
-const { __helperUrl } = require("@jx3box/jx3box-common/js/jx3box.json");
+const { __helperUrl } = require("@jx3box/jx3box-common/data/jx3box.json");
 const qs = require("qs");
 
 function get_menus(params) {
