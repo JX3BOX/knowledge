@@ -42,12 +42,6 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
-            "/api/wiki": {
-                "target": "https://helper.jx3box.com",
-                "onProxyReq": function (request) {
-                    request.setHeader("origin", "");
-                }
-            },
             "/api/messages": {
                 "target": "https://helper.jx3box.com",
                 "onProxyReq": function (request) {
