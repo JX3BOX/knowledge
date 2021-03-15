@@ -7,8 +7,8 @@
                     <span class="u-name">成就</span>
                     <span
                         class="u-count"
-                        v-if="achievement_count"
-                        v-text="`(${achievement_count})`"
+                        v-if="wiki_count && wiki_count.achievements_total"
+                        v-text="`(${wiki_count.achievements_total})`"
                     ></span>
                 </a>
             </li>
@@ -18,8 +18,8 @@
                     <span class="u-name">物品</span>
                     <span
                         class="u-count"
-                        v-if="item_count"
-                        v-text="`(${item_count})`"
+                        v-if="wiki_count && wiki_count.items_total"
+                        v-text="`(${wiki_count.items_total})`"
                     ></span>
                 </a>
             </li>
@@ -33,6 +33,11 @@
                 <a href="/bbs#namespace" target="_blank">
                     <i class="u-icon el-icon-postcard"></i>
                     <span class="u-name">铭牌</span>
+                    <span
+                        class="u-count"
+                        v-if="wiki_count && wiki_count.namespaces_total"
+                        v-text="`(${wiki_count.namespaces_total})`"
+                    ></span>
                 </a>
             </li>
             <!-- <li>
@@ -71,8 +76,7 @@
 
 <script>
 import { get_menus } from "../service/knowledge";
-import { get_count as get_achievement_count } from "../service/achievement";
-import { get_count as get_item_count } from "../service/item";
+import { get_count as get_wiki_count } from "../service/wiki";
 import { __imgPath, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import icons from "@/assets/data/icons.json";
 export default {
@@ -81,8 +85,7 @@ export default {
         return {
             types: [],
             icons: icons,
-            achievement_count: 0,
-            item_count: 0,
+            wiki_count: null,
         };
     },
     computed: {
@@ -109,7 +112,7 @@ export default {
             if (data.code === 200) this.types = data.data.menus;
         });
 
-        get_achievement_count().then((data) => {
+        get_wiki_count().then((data) => {
             data = data.data;
             if (data.code === 200) {
                 this.achievement_count =
@@ -117,11 +120,9 @@ export default {
             }
         });
 
-        get_item_count().then((data) => {
+        get_wiki_count().then((data) => {
             data = data.data;
-            if (data.code === 200) {
-                this.item_count = data.data.total;
-            }
+            if (data.code === 200) this.wiki_count = data.data;
         });
     },
 };
