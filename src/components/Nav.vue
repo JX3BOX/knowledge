@@ -1,6 +1,24 @@
 <template>
     <nav class="m-nav">
         <ul class="m-nav-list" v-if="types">
+            <li v-for="(type, key) in types" :key="key">
+                <router-link
+                    :to="{
+                        name: 'normal',
+                        params: { knowledge_type: type.name },
+                    }"
+                    :class="{ on: isActive(type.name) }"
+                >
+                    <!-- <img :src="type.name | knowledgeIconURL" /> -->
+                    <i class="u-icon" :class="icons[type.name]"></i>
+                    <span class="u-name" v-text="type.label"></span>
+                    <span
+                        class="u-count"
+                        v-if="type.count"
+                        v-text="`(${type.count})`"
+                    ></span>
+                </router-link>
+            </li>
             <li>
                 <a href="/cj" target="_blank">
                     <i class="u-icon el-icon-medal"></i>
@@ -52,24 +70,6 @@
                     <span class="u-name">表情</span>
                 </a>
             </li> -->
-            <li v-for="(type, key) in types" :key="key">
-                <router-link
-                    :to="{
-                        name: 'normal',
-                        params: { knowledge_type: type.name },
-                    }"
-                    :class="{ on: isActive(type.name) }"
-                >
-                    <!-- <img :src="type.name | knowledgeIconURL" /> -->
-                    <i class="u-icon" :class="icons[type.name]"></i>
-                    <span class="u-name" v-text="type.label"></span>
-                    <span
-                        class="u-count"
-                        v-if="type.count"
-                        v-text="`(${type.count})`"
-                    ></span>
-                </router-link>
-            </li>
         </ul>
     </nav>
 </template>
@@ -113,10 +113,9 @@ export default {
         });
 
         get_wiki_count().then((data) => {
-            data = data.data;
+            let count = data.data && data.data.count;
             if (data.code === 200) {
-                this.achievement_count =
-                    data.data.count.general + data.data.count.armor;
+                this.achievement_count = count.general + count.armor;
             }
         });
 
