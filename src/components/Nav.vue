@@ -58,6 +58,17 @@
                     ></span>
                 </a>
             </li>
+            <li>
+                <router-link :to="{name:'pet.home'}" target="_blank">
+                    <i class="u-icon el-icon-pear"></i>
+                    <span class="u-name">宠物</span>
+                    <span
+                        class="u-count"
+                        v-if="wiki_count && wiki_count.pets_total"
+                        v-text="`(${wiki_count.pets_total})`"
+                    ></span>
+                </router-link>
+            </li>
             <!-- <li>
                 <a href="/bbs#joke" target="_blank">
                     <i class="u-icon el-icon-chat-line-square"></i>
