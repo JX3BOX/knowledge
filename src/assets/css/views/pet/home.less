@@ -10,8 +10,39 @@
   }
 
   .m-pet {
+    .pr;
     .dbi;
-    margin: 0 8px 3px 0;
+    .w(72px);
+    margin: 0 8px 8px 0;
+    text-align: center;
+
+    .u-name {
+      .mt(-6px);
+      font-size: 12px;
+    }
+
+    .u-name, .m-simple-item {
+      .pr;
+      z-index: 20;
+    }
+
+    &:before {
+      content: '';
+      border-color: white;
+      transition: all .3s ease;
+    }
+
+    &:hover:before {
+      .pa;
+      top: -8%;
+      left: 0;
+      .w(100%);
+      .h(110%);
+      background-color: #e6f0fb;
+      border-radius: 4px;
+      border: 1px solid lightblue;
+      z-index: 10;
+    }
   }
 
   .m-filter {

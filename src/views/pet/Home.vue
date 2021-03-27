@@ -28,6 +28,7 @@
           <li class="m-pet" v-for="(pet,key) in search_pets" :key="key">
             <a target="_blank" :href="wiki_url(pet.item_id, pet.achievement_id)">
               <jx3-item-simple :item="pet.item" only-icon="true" icon-size="48px"/>
+              <div class="u-name" v-text="pet.Name"></div>
             </a>
           </li>
         </ul>
