@@ -48,17 +48,6 @@
                 </a>
             </li> -->
             <li>
-                <a href="/bbs#namespace" target="_blank">
-                    <i class="u-icon el-icon-postcard"></i>
-                    <span class="u-name">铭牌</span>
-                    <span
-                        class="u-count"
-                        v-if="wiki_count && wiki_count.namespaces_total"
-                        v-text="`(${wiki_count.namespaces_total})`"
-                    ></span>
-                </a>
-            </li>
-            <li>
                 <router-link :to="{name:'pet.home'}" target="_blank">
                     <i class="u-icon el-icon-pear"></i>
                     <span class="u-name">宠物</span>
@@ -68,6 +57,17 @@
                         v-text="`(${wiki_count.pets_total})`"
                     ></span>
                 </router-link>
+            </li>
+            <li>
+                <a href="/bbs/#/namespace" target="_blank">
+                    <i class="u-icon el-icon-postcard"></i>
+                    <span class="u-name">铭牌</span>
+                    <span
+                        class="u-count"
+                        v-if="wiki_count && wiki_count.namespaces_total"
+                        v-text="`(${wiki_count.namespaces_total})`"
+                    ></span>
+                </a>
             </li>
             <!-- <li>
                 <a href="/bbs#joke" target="_blank">
