@@ -26,6 +26,12 @@
                             <span> 物品百科</span>
                         </a>
                     </li>
+                    <li class="u-qlink">
+                        <a href="#/pet" target="_blank">
+                            <i class="el-icon-pear"></i>
+                            <span> 宠物百科</span>
+                        </a>
+                    </li>
                 </ul>
             </template>
         </WikiPanel>
