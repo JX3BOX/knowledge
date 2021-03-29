@@ -46,10 +46,14 @@
                 </li>
             </ul>
         </div>
+
+        <!-- 热门宠物 -->
+        <PetRank />
     </div>
 </template>
 
 <script>
+import PetRank from "../components/PetRank";
 import { getStatRank } from "@jx3box/jx3box-common/js/stat";
 import { get_list } from "../service/knowledge";
 
@@ -116,7 +120,9 @@ export default {
     mounted: function() {
         this.loadData();
     },
-    components: {},
+    components: {
+      PetRank,
+    },
 };
 </script>
 
