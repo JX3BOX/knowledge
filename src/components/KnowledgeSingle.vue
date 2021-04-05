@@ -33,7 +33,7 @@
 <script>
 import _ from "lodash";
 import { ts2str } from "@jx3box/jx3box-common/js/utils";
-import Fav from "@jx3box/jx3box-common-ui/src/Fav";
+import Fav from "@jx3box/jx3box-common-ui/src/interact/Fav";
 
 export default {
     name: "KnowledgeSingle",
