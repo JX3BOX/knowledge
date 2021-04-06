@@ -62,18 +62,22 @@
   }
 }
 @media screen and (max-width: @phone) {
-  .m-pet-home-view .m-filter {
-    .u-keyword {
-      margin-bottom: 10px;
-      width: 100%;
+  .m-pet-home-view{
+    .m-filter {
+      .u-keyword {
+        margin-bottom: 10px;
+        width: 100%;
+      }
+      .u-type,
+      .u-source {
+        width: 40%;
+      }
+      .el-select-dropdown .el-select-dropdown__item {
+        .fz(14px, 2);
+      }
     }
-    .u-type,
-    .u-source {
-      width: 40%;
-    }
-
-    .el-select-dropdown .el-select-dropdown__item {
-      .fz(14px, 2);
+    .m-pets .m-pet:nth-child(4n){
+      margin-right: 0;
     }
   }
 }
