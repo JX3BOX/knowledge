@@ -48,7 +48,7 @@
                 </a>
             </li> -->
             <li>
-                <router-link :to="{name:'pet.home'}" target="_blank">
+                <router-link :to="{name:'pet.home'}">
                     <i class="u-icon el-icon-pear"></i>
                     <span class="u-name">宠物</span>
                     <span
