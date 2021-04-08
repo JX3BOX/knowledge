@@ -41,12 +41,17 @@
                     ></span>
                 </a>
             </li>
-            <!-- <li>
+            <li>
                 <a href="/quest" target="_blank">
                     <i class="u-icon el-icon-collection-tag"></i>
                     <span class="u-name">任务</span>
+                    <span
+                        class="u-count"
+                        v-if="wiki_count && wiki_count.quests_total"
+                        v-text="`(${wiki_count.quests_total})`"
+                    ></span>
                 </a>
-            </li> -->
+            </li>
             <li>
                 <router-link :to="{name:'pet.home'}">
                     <i class="u-icon el-icon-pear"></i>
