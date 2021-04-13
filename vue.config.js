@@ -6,20 +6,20 @@ const Setting = require("./setting.json");
 module.exports = {
 
     //❤️ Multiple pages ~
-    // pages:{
-    //     index : {
-    //         title : 'Home - JX3BOX',
-    //         entry:'src/main.js',
-    //         template : 'public/index.html',
-    //         filename:'index.html',
-    //     },
-    //     $project : {
-    //         title : 'Home - JX3BOX',
-    //         entry:'src/core/$project/index.js',
-    //         template : 'public/$project/index.html',
-    //         filename:'$project/index.html',
-    //     },
-    // },
+    pages:{
+        index : {
+            title : '通识百科 - JX3BOX',
+            entry:'src/driver/knowledge.js',
+            template : 'public/index.html',
+            filename:'index.html',
+        },
+        quest : {
+            title : '任务百科 - JX3BOX',
+            entry:'src/driver/quest.js',
+            template : 'public/quest.html',
+            filename:'quest.html',
+        },
+    },
 
     //❤️ Porxy ~
     devServer: {
@@ -124,16 +124,16 @@ module.exports = {
 
     chainWebpack: config => {
 
-        //💘 html-webpack-plugin ~
-        // Multiple pages disable the block below
-        config.plugin("html").tap(args => {
-            args[0].meta = {                            //------设置SEO信息
-                Keywords: Setting.keys,
-                Description: Setting.desc
-            };
-            args[0].title = Setting.title + SEO.title;  //------自动添加标题后缀
-            return args;
-        });
+        // //💘 html-webpack-plugin ~
+        // // Multiple pages disable the block below
+        // config.plugin("html").tap(args => {
+        //     args[0].meta = {                            //------设置SEO信息
+        //         Keywords: Setting.keys,
+        //         Description: Setting.desc
+        //     };
+        //     args[0].title = Setting.title + SEO.title;  //------自动添加标题后缀
+        //     return args;
+        // });
 
 
         //💝 in-line small imgs ~

@@ -204,7 +204,7 @@
                     </div>
                     <div class="m-source">
                       <div class="u-source">
-                        <img class="u-icon" svg-inline src="../assets/img/knowledge.svg" />
+                        <img class="u-icon" svg-inline src="../../assets/img/knowledge.svg" />
                         <router-link class="u-name" :to="{name: 'view', params: { source_id: post.source_id }}"
                                      v-text="post.title"></router-link>
                       </div>
@@ -225,7 +225,7 @@
 <script>
 const { JX3BOX } = require("@jx3box/jx3box-common");
 import { feedback } from "@jx3box/jx3box-common/data/jx3box.json";
-import Search from "../components/Search";
+import Search from "../../components/knowledge/Search";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
 import {WikiPost} from "@jx3box/jx3box-common/js/helper";
 import { getMenuGroups } from "@/service/helper.js";
@@ -334,5 +334,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/views/home.less";
+@import "../../assets/css/views/home.less";
 </style>

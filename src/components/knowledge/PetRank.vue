@@ -2,7 +2,7 @@
     <div class="m-pet-rank">
         <div class="m-hot-pets">
             <h3 class="c-sidebar-right-title">
-                <img class="u-icon" svg-inline src="../assets/img/side/rank.svg" />
+                <img class="u-icon" svg-inline src="../../assets/img/side/rank.svg" />
                 <span>热门宠物</span>
             </h3>
             <div class="u-list" v-if="hot_pets && hot_pets.length">
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/components/pet-rank.less";
+@import "../../assets/css/components/pet-rank.less";
 </style>
 
 <style scope lang="less">

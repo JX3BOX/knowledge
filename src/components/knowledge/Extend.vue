@@ -16,7 +16,7 @@
                 <img
                     class="u-icon"
                     svg-inline
-                    src="../assets/img/side/rank.svg"
+                    src="../../assets/img/side/rank.svg"
                 />
                 热门榜
             </h3>
@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import PetRank from "../components/PetRank";
+import PetRank from "./PetRank";
 import { getStatRank } from "@jx3box/jx3box-common/js/stat";
-import { get_list } from "../service/knowledge";
+import { get_list } from "../../service/knowledge";
 
 export default {
     name: "Extend",
@@ -127,9 +127,9 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/components/extend.less";
-@import "../assets/css/side.less";
-@import "../assets/css/rank.less";
+@import "../../assets/css/components/extend.less";
+@import "../../assets/css/side.less";
+@import "../../assets/css/rank.less";
 </style>
 
  

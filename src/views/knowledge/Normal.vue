@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import { get_menu_list } from "../service/knowledge";
-import Search from "../components/Search";
+import { get_menu_list } from "../../service/knowledge";
+import Search from "../../components/knowledge/Search";
 import icons from "@/assets/data/icons.json";
 import { ts2str } from "@jx3box/jx3box-common/js/utils";
 import _ from "lodash";
@@ -129,5 +129,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/views/normal.less";
+@import "../../assets/css/views/normal.less";
 </style>

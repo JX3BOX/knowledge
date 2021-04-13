@@ -91,8 +91,8 @@
 </template>
 
 <script>
-import { get_menus } from "../service/knowledge";
-import { get_count as get_wiki_count } from "../service/wiki";
+import { get_menus } from "../../service/knowledge";
+import { get_count as get_wiki_count } from "../../service/wiki";
 import { __imgPath, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import icons from "@/assets/data/icons.json";
 export default {
@@ -144,5 +144,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/nav.less";
+@import "../../assets/css/nav.less";
 </style>

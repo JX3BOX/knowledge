@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {get_count} from '../service/knowledge';
+import {get_count} from '../../service/knowledge';
 export default {
   name: "Info",
   data: function () {
@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style lang="less">
-@import '../assets/css/components/info.less';
+@import '../../assets/css/components/info.less';
 </style>

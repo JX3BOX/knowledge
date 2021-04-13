@@ -2,12 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // 组件懒加载
-const Home = () => import("./views/Home.vue");
-const Normal = () => import("./views/Normal.vue");
-const Detail = () => import("./views/Detail.vue");
-const Search = () => import("./views/Search.vue");
+const Home = () => import("../views/knowledge/Home.vue");
+const Normal = () => import("../views/knowledge/Normal.vue");
+const Detail = () => import("../views/knowledge/Detail.vue");
+const Search = () => import("../views/knowledge/Search.vue");
 
-const PetHome = () => import("./views/pet/Home.vue");
+const PetHome = () => import("../views/knowledge/pet/Home.vue");
 
 Vue.use(VueRouter);
 
@@ -28,8 +28,8 @@ const routes = [
     {path: '*', redirect: 'search/'}
 ];
 
-const router = new VueRouter({
+const knowledge = new VueRouter({
     routes,
 });
 
-export default router;
+export default knowledge;

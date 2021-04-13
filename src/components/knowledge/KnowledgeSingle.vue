@@ -58,5 +58,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/components/knowledge-single.less";
+@import "../../assets/css/components/knowledge-single.less";
 </style>

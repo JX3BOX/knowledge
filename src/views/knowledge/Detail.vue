@@ -13,7 +13,7 @@
                     <img
                         class="u-icon"
                         svg-inline
-                        src="../assets/img/knowledge.svg"
+                        src="../../assets/img/knowledge.svg"
                     />
                     <span>通识正文</span>
                 </template>
@@ -58,10 +58,10 @@
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { WikiPost } from "@jx3box/jx3box-common/js/helper";
 import { publishLink } from "@jx3box/jx3box-common/js/utils";
-import KnowledgeSingle from "../components/KnowledgeSingle";
+import KnowledgeSingle from "../../components/knowledge/KnowledgeSingle";
 import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
 import WikiRevisions from "@jx3box/jx3box-common-ui/src/WikiRevisions";
-import Search from "../components/Search";
+import Search from "../../components/knowledge/Search";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 
@@ -145,5 +145,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/views/detail.less";
+@import "../../assets/css/views/detail.less";
 </style>
