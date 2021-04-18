@@ -4,7 +4,11 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 let knowledge = {
-    state: {},
+    state: {
+        sidebar : {
+            class_id: null,
+        },
+    },
     mutations: {},
     getters: {},
     actions: {},

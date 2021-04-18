@@ -36,7 +36,7 @@ import { ts2str } from "@jx3box/jx3box-common/js/utils";
 import Fav from "@jx3box/jx3box-common-ui/src/interact/Fav";
 
 export default {
-    name: "KnowledgeSingle",
+    name: "SourceSingle",
     props: ["knowledge", "favEnable", "deep"],
     methods: {
         date_format: ts2str,

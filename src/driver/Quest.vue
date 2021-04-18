@@ -10,7 +10,7 @@
         :feedbackEnable="true"
     >
       <img slot="logo" svg-inline src="../assets/img/quest.svg"/>
-      <BreadcrumbInfo />
+      <BreadcrumbInfo/>
     </Breadcrumb>
     <LeftSidebar>
       <Nav/>
@@ -33,13 +33,18 @@
   export default {
     name: "App",
     components: {
-        Nav,
-        BreadcrumbInfo,
+      Nav,
+      BreadcrumbInfo,
     },
     watch: {
       $route: {
         immediate: true,
         handler() {
+          if (typeof this.$route.params.class_id === 'undefined') {
+            this.$store.state.sidebar.class_id = null;
+          } else {
+            this.$store.state.sidebar.class_id = this.$route.params.class_id ? this.$route.params.class_id : 0;
+          }
         }
       },
     }

@@ -1,0 +1,53 @@
+.m-quest-single {
+  .db;
+  .pr;
+  .mb(10px);
+  padding: 10px;
+  background-color: #EBE7DC;
+  border: 1px solid #577B73;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  .r(4px);
+  .clearfix;
+  transition: 0.15s border ease-in-out, 0.15s background ease-in-out;
+
+  &:hover {
+    border-color: @primary;
+    background-color: #f0e9f0;
+  }
+
+  .u-name {
+    .mb(8px);
+    .bold;
+  }
+
+  .u-objective {
+    .mb(8px);
+  }
+
+  .u-description {
+    .mb(8px);
+      line-height: 1.6em;
+  }
+
+  .m-start-end {
+    opacity: .75;
+
+    .u-start, .u-end {
+      .dbi;
+      .mr(15px);
+
+      span {
+        .mr(5px);
+      }
+    }
+  }
+
+  .u-meta {
+    .fr;
+  }
+
+  @media screen and (max-width: @ipad) {
+  }
+}
