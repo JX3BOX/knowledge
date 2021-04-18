@@ -51,8 +51,8 @@
     methods: {
       clickNode() {
       },
-      menuLink() {
-        return {};
+      menuLink(menu, node) {
+        return {name: 'normal', params: menu.ID ? {class_id: menu.ID} : {}};
       },
     },
     created() {

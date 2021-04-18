@@ -10,7 +10,7 @@ function get_menus(params) {
 }
 
 function get_menu_list(params) {
-    return $http.get(`${__helperUrl}api/knowledge/menu_list`, {
+    return $http.get(`${__helperUrl}api/quest/menu_list`, {
         headers: { Accept: "application/prs.helper.v2+json" },
         params: params,
     });
