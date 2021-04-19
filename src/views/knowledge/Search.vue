@@ -138,5 +138,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../assets/css/views/normal.less";
+@import "../../assets/css/views/knowledge/normal.less";
 </style>

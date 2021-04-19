@@ -145,5 +145,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../assets/css/views/detail.less";
+@import "../../assets/css/views/knowledge/detail.less";
 </style>

@@ -119,5 +119,5 @@ export default {
 </script>
 
 <style scope lang="less">
-@import "../../../assets/css/views/pet/home.less";
+@import "../../../assets/css/views/knowledge/pet/home.less";
 </style>

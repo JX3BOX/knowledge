@@ -17,18 +17,41 @@
     background-color: #f0e9f0;
   }
 
-  .u-name {
+  .m-name {
     .mb(8px);
     .bold;
+
+    & > * {
+      .ml(5px);
+    }
+
+    .u-level {
+      opacity: .75;
+    }
+
+    .u-required {
+      color: red;
+    }
+
+    .u-can {
+      .ml(8px);
+      color: darkgreen;
+    }
   }
 
   .u-objective {
     .mb(8px);
   }
 
+  .m-complete {
+    .mb(8px);
+    .ml(2em);
+    color: gray;
+  }
+
   .u-description {
     .mb(8px);
-      line-height: 1.6em;
+    line-height: 1.6em;
   }
 
   .m-start-end {

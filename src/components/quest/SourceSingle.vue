@@ -4,8 +4,18 @@
       <div v-if="!favEnable" class="u-id" v-text="`ID: ${source.id}`"></div>
       <Fav v-else post-type="quest" :post-id="source.id"/>
     </div>
-    <div class="u-name" v-text="source.Name"></div>
+    <div class="m-name">
+      <span class="u-name" v-text="source.Difficulty ? `【${source.Difficulty}】${source.Name}` : source.Name"></span>
+      <span class="u-level" v-if="source.QuestLevel" v-text="`${source.QuestLevel}级`"></span>
+      <span class="u-required" v-if="source.RequiredLevel" v-text="`需要${source.RequiredLevel}级`"></span>
+      <span class="u-can" v-if="source.CanShare">可分享</span>
+      <span class="u-can" v-if="source.CanRepeat">可重复完成</span>
+      <span class="u-can" v-if="source.CanAssist">可协助完成</span>
+    </div>
     <div class="u-objective" v-html="source.Objective"></div>
+    <div class="m-complete">
+      <div v-for="(item,key) in source.EndRequireItems" :key="key" v-text="`${item.Name}：0/${item.Amount}`"></div>
+    </div>
     <div class="u-description">
         <div>任务描述：</div>
         <div v-html="source.Description"></div>

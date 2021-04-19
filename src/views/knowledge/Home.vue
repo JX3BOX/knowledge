@@ -334,5 +334,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../assets/css/views/home.less";
+@import "../../assets/css/views/knowledge/home.less";
 </style>
