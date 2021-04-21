@@ -16,7 +16,7 @@
     <div class="m-complete">
       <div v-for="(item,key) in source.EndRequireItems" :key="key" v-text="`${item.Name}：0/${item.Amount}`"></div>
     </div>
-    <div class="u-description">
+    <div class="u-description" v-if="source.Description">
         <div>任务描述：</div>
         <div v-html="source.Description"></div>
     </div>
