@@ -13,7 +13,7 @@
                 class="u-search-input"
                 v-model="keyword"
                 @keydown.enter.native="search_handle"
-                placeholder="输入通识名称「回车」进行搜索"
+                placeholder="输入任务名称（可适配中括号形式）「回车」进行搜索"
             >
                 <span slot="prepend">关键词</span>
             </el-input>
@@ -31,7 +31,7 @@
                 @click="add_handle"
                 type="primary"
                 icon="el-icon-plus"
-                >创建百科通识</el-button
+                >参加修订</el-button
             >
         </div> -->
     </div>
@@ -53,7 +53,7 @@ export default {
             history.back();
         },
         add_handle() {
-            location.href = this.publish_url("knowledge");
+            location.href = this.publish_url("quest");
         },
         search_handle() {
             this.$router.push({

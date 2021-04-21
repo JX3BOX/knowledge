@@ -1,123 +1,171 @@
 <template>
-    <div class="m-pet-home-view">
-        <WikiPanel class="m-pet-list" :border-none="true">
-            <template slot="head-title">
-                <i class="el-icon-location-information"></i>
-                <span>宠物密鉴</span>
-            </template>
-            <template slot="head-actions">
-                <a class="other" target="_blank" :href="feedback">反馈建议 &raquo;</a>
-            </template>
-            <template slot="body">
-                <div class="m-filter">
-                    <el-input class="u-keyword" v-model="keyword" placeholder="输入关键字"></el-input>
-                    <el-select class="u-type" v-model="type">
-                        <el-option label="所有种类" value></el-option>
-                        <template v-for="item in types">
-                            <el-option
-                                :key="item.ID"
-                                v-if="item.Type == 1"
-                                :label="item.TypeName"
-                                :value="item.ID"
-                            ></el-option>
-                        </template>
-                    </el-select>
-                    <el-select class="u-source" v-model="source">
-                        <el-option label="所有途径" value></el-option>
-                        <template v-for="item in types">
-                            <el-option
-                                :key="item.ID"
-                                v-if="item.Type == 2"
-                                :label="item.TypeName"
-                                :value="item.ID"
-                            ></el-option>
-                        </template>
-                    </el-select>
+  <div class="m-home-view">
+    <Search/>
+
+    <WikiPanel :border-none="true">
+      <template slot="head-title">
+        <i class="el-icon-collection"></i>
+        <span> 热门任务</span>
+      </template>
+      <template slot="body">
+        <div class="m-hot-slots">
+          <el-carousel
+              height="66px"
+              direction="vertical"
+              indicator-position="none"
+              v-if="hots && hots.length"
+          >
+            <el-carousel-item v-for="(items, key) in hots" :key="key" class="m-carousel">
+              <el-row :gutter="20">
+                <template v-for="(item, k) in items">
+                  <el-col :md="8" v-if="item" :key="k">
+                    <router-link
+                        class="u-item"
+                        :to="{name:'view',params:{source_id:item.id}}"
+                    >
+                      <div class="u-icon">
+                        <img :src="hot_icon"/>
+                      </div>
+                      <div class="m-carousel-content">
+                        <div class="u-title" v-text="item.Name"></div>
+                        <div class="u-desc" v-if="item.post">
+                          <span :title="item.post.remark">{{'By ' + item.post.user_nickname}}</span>
+                        </div>
+                      </div>
+                    </router-link>
+                  </el-col>
+                </template>
+              </el-row>
+            </el-carousel-item>
+          </el-carousel>
+          <div v-else style="text-align:center">😂 暂无热门任务</div>
+        </div>
+      </template>
+    </WikiPanel>
+
+    <WikiPanel :border-none="true">
+      <template slot="head-title">
+        <i class="el-icon-time"></i>
+        <span> 最近更新</span>
+      </template>
+      <template slot="body">
+        <div class="m-posts">
+          <div class="m-post" v-for="(post, key) in newest_posts" :key="key">
+            <div class="m-head">
+              <div class="m-user">
+                <div class="u-author">
+                  <img class="u-icon" :src="post.user_avatar" :alt="post.user_nickname"/>
+                  <a :href="post.user_id ? author_url(post.user_id) : null" class="u-name"
+                     v-text="post.user_nickname"></a>
                 </div>
-                <ul class="m-pets" v-if="search_pets && search_pets.length">
-                    <li class="m-pet" v-for="(pet, key) in search_pets" :key="key">
-                        <a class="u-pet" target="_blank" :href="wiki_url(pet.item_id, pet.achievement_id)">
-                            <jx3-item-simple class="u-pet-icon" :item="pet.item" only-icon="true" icon-size="48px" />
-                            <div class="u-name" v-text="pet.Name"></div>
-                        </a>
-                    </li>
-                </ul>
-            </template>
-        </WikiPanel>
-    </div>
+                <div class="u-updated" v-text="ts2str(post.updated)"></div>
+              </div>
+              <div class="m-source">
+                <div class="u-source">
+                  <img class="u-icon" svg-inline src="../../assets/img/quest.svg"/>
+                  <router-link class="u-name" :to="{name: 'view', params: { source_id: post.source_id }}"
+                               v-text="post.title"></router-link>
+                </div>
+                <div class="u-remark" v-if="post.remark" v-text="'📑 ' + post.remark"></div>
+              </div>
+            </div>
+            <div class="m-body">
+              <div class="u-excerpt" :to="{ name: 'view', params: { source_id: post.source_id } }"
+                   v-html="ellipsis(post.excerpt)"></div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </WikiPanel>
+  </div>
 </template>
 
 <script>
-import { feedback } from "@jx3box/jx3box-common/data/jx3box.json";
-import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
-import ItemSimple from "@jx3box/jx3box-editor/src/ItemSimple";
-import { get_list, get_type_list } from "@/service/pet.js";
-import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";
+  const {JX3BOX} = require("@jx3box/jx3box-common");
+  import {feedback} from "@jx3box/jx3box-common/data/jx3box.json";
+  import Search from "../../components/quest/Search";
+  import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
+  import {WikiPost} from "@jx3box/jx3box-common/js/helper";
+  import {get_list} from "../../service/quest.js";
+  import {getStatRank} from "@jx3box/jx3box-common/js/stat";
+  import {authorLink, ts2str, iconLink} from "@jx3box/jx3box-common/js/utils";
 
-export default {
+  export default {
     name: "Home",
+    props: [],
     data() {
-        return {
-            feedback,
-            pets: null,
-            types: null,
-            keyword: "",
-            type: "",
-            source: "",
-        };
-    },
-    computed: {
-        search_pets() {
-            let pets = [];
-            for (let index in this.pets) {
-                let pet = this.pets[index];
-                if (
-                    (this.keyword && pet.Name.indexOf(this.keyword) === -1) ||
-                    (this.type &&
-                        pet.TypeID.indexOf(`,${this.type},`) === -1) ||
-                    (this.source && pet.TypeID.indexOf(this.source) === -1)
-                )
-                    continue;
-                pets.push(pet);
-            }
-            return pets;
-        },
+      return {
+        feedback,
+        menu_groups: {},
+        hots: null,
+        hot_views: null,
+        hot_icon: JX3BOX.__iconPath + "icon/244.png",
+        jargons: [],
+        newest_posts: null,
+      };
     },
     methods: {
-        icon_url: iconLink,
-        wiki_url(item_id, achievement_id) {
-            if (achievement_id) return getLink("achievement", achievement_id);
-            if (item_id) return getLink("item", item_id);
-            return null;
-        },
+      icon_url: iconLink,
+      author_url: authorLink,
+      ts2str,
+      chuck(arr, number = 3) {
+        let output = [];
+        for (let i = 0; i < arr.length; i += number) {
+          output.push(arr.slice(i, i + number));
+        }
+        return output;
+      },
+      ellipsis(value) {
+        value = value ? value.trim() : "";
+        if (value.length > 100) {
+          return value.slice(0, 100) + "...";
+        }
+        return value;
+      },
+      loadHotPlots: function () {
+        getStatRank('quest', 'views', 18).then((res) => {
+          res = res.data;
+          this.hot_views = [];
+          let source_ids = [];
+          res.forEach((item) => {
+            if (item.name.startsWith("quest")) {
+              let id = item.name.split("-").pop();
+              source_ids.push(id);
+              this.hot_views[id] = item.value;
+            }
+          });
+
+          get_list({ids: source_ids}).then((res) => {
+            res = res.data;
+            // 按照长度分批
+            if (res.code === 200) this.hots = this.chuck(Object.values(res.data.data));
+          });
+        });
+      },
+      loadNewestPost() {
+        // 获取最新帖子列表
+        WikiPost.newests('quest').then(
+            (res) => {
+              res = res.data;
+              if (res.code === 200) this.newest_posts = res.data.newest;
+            }
+        );
+      },
+      loadData: function () {
+        this.loadHotPlots();
+        this.loadNewestPost();
+      },
     },
     created() {
-        get_list().then((res) => {
-            res = res.data;
-            if (res.code === 200) {
-                let pets = res.data.pets;
-                for (let index in pets) {
-                    pets[index].item = {
-                        id: pets[index].item_id,
-                        IconID: pets[index].IconID,
-                        Quality: pets[index].Quality,
-                    };
-                }
-                this.pets = pets;
-            }
-        });
-        get_type_list().then((res) => {
-            res = res.data;
-            if (res.code === 200) this.types = res.data.types;
-        });
+      this.loadData();
     },
     components: {
-        WikiPanel,
-        "jx3-item-simple": ItemSimple,
+      Search,
+      WikiPanel,
     },
-};
+  };
 </script>
 
-<style scope lang="less">
-@import "../../assets/css/views/knowledge/pet/home.less";
+<style lang="less">
+  @import "../../assets/css/views/quest/home.less";
 </style>

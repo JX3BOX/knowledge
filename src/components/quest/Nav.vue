@@ -1,27 +1,28 @@
 <template>
   <nav class="m-nav">
-    <el-input class="u-keyword" v-model="keyword" placeholder="输入关键字"></el-input>
-    <el-tree
-        class="m-menus"
-        :data="search_menus"
-        node-key="id"
-        ref="tree"
-        @node-click="clickNode"
-    >
-      <router-link
-          v-if="data.Name.indexOf(keyword)>=0"
-          class="el-tree-node__label"
-          slot-scope="{ node, data }"
-          :to="menuLink(data, node)"
+    <el-input class="u-keyword" v-model="keyword" placeholder="输入分类关键字"></el-input>
+    <div class="m-menus-panel">
+      <el-tree
+          class="m-menus"
+          :data="search_menus"
+          node-key="id"
+          ref="tree"
       >
-        <span class="u-name" v-text="data.Name"></span>
-        <em
-            v-if="data.total"
-            class="u-count"
-            v-text="`(${data.total})`"
-        ></em>
-      </router-link>
-    </el-tree>
+        <router-link
+            v-if="data.Name.indexOf(keyword)>=0"
+            class="el-tree-node__label"
+            slot-scope="{ node, data }"
+            :to="menuLink(data, node)"
+        >
+          <span class="u-name" v-text="data.Name"></span>
+          <em
+              v-if="data.total"
+              class="u-count"
+              v-text="`(${data.total})`"
+          ></em>
+        </router-link>
+      </el-tree>
+    </div>
   </nav>
 </template>
 
@@ -49,8 +50,6 @@
       }
     },
     methods: {
-      clickNode() {
-      },
       menuLink(menu, node) {
         return {name: 'normal', params: menu.ID ? {class_id: menu.ID} : {}};
       },
@@ -66,4 +65,5 @@
 
 <style lang="less">
   @import "../../assets/css/components/normal-nav.less";
+  @import "../../assets/css/components/quest/nav.less";
 </style>

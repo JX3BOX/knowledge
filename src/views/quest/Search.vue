@@ -1,9 +1,9 @@
 <template>
   <div class="m-wiki-wrapper">
-    <Search/>
+    <search-bar/>
     <!-- 列表 -->
     <div class="m-wiki-list" v-if="sources && sources.length">
-      <SourceSingle v-for="(source, i) in sources" :key="i" :source="source" :fav-enable="false" />
+      <SourceSingle v-for="(source, i) in sources" :key="i" :source="source" :fav-enable="false"/>
     </div>
     <el-pagination
         class="m-wiki-pages"
@@ -20,23 +20,28 @@
 </template>
 
 <script>
-  import {get_menu_list} from "../../service/quest";
-  import Search from "../../components/quest/Search";
+  import {get_list} from "../../service/quest";
+  import Search from "../../components/quest/Search.vue";
   import SourceSingle from "../../components/quest/SourceSingle";
+  import icons from "@/assets/data/icons.json";
   import {ts2str} from "@jx3box/jx3box-common/js/utils";
 
   export default {
-    name: "Normal",
-    data() {
+    name: "Search",
+    props: [],
+    data: function () {
       return {
         sources: [],
         sources_total: 0,
         page: 1,
         length: 15,
+
+        icons: icons,
+        date_format: ts2str,
       };
     },
     computed: {
-      params: function () {
+      params() {
         return {
           limit: this.length,
           page: this.page,
@@ -45,19 +50,26 @@
       },
     },
     methods: {
-      date_format: ts2str,
       loadData: function () {
-        get_menu_list(this.params).then((res) => {
-          res = res.data;
-          if (res.code === 200) {
-            this.sources = res.data.data;
-            this.sources_total = res.data.total;
+        get_list({
+          ids: this.$route.query.ids ? this.$route.query.ids.split(",") : [],
+          keyword: this.$route.params.keyword,
+          page: this.page,
+          limit: this.length,
+        }).then((data) => {
+          data = data.data;
+          if (data.code === 200) {
+            this.sources = data.data.data;
+            this.sources_total = data.data.total;
+          } else {
+            this.sources = [];
+            this.sources_total = 0;
           }
         });
       },
     },
     components: {
-      Search,
+      "search-bar": Search,
       SourceSingle,
     },
     watch: {

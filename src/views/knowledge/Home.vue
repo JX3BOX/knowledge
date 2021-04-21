@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li class="u-qlink">
-                        <a href="/quest" target="_blank">
+                        <a href="/knowledge/quest" target="_blank">
                             <i class="el-icon-discover"></i>
                             <span> 任务百科</span>
                         </a>

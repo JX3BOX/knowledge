@@ -14,7 +14,7 @@
                         svg-inline
                         src="../../assets/img/quest.svg"
                     />
-                    <span>通识正文</span>
+                    <span>任务攻略</span>
                 </template>
                 <template slot="head-actions">
                     <a
@@ -22,7 +22,7 @@
                         :href="publish_url(`quest/${id}`)"
                     >
                         <i class="el-icon-edit"></i>
-                        <span>完善百科通识</span>
+                        <span>完善任务百科</span>
                     </a>
                 </template>
                 <template slot="body">
@@ -47,7 +47,7 @@
             <i class="el-icon-s-opportunity"></i>
             <span> 暂无内容，我要</span>
             <a class="s-link" :href="publish_url(`quest/${id}`)"
-                >完善百科通识</a
+                >完善任务百科</a
             >
         </div>
     </div>
