@@ -4,7 +4,7 @@
     <Breadcrumb
         name="任务百科"
         slug="quest"
-        root="/knowledge/quest"
+        root="/knowledge/quest.html"
         :publishEnable="true"
         :adminEnable="false"
         :feedbackEnable="true"
