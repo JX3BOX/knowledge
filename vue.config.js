@@ -13,12 +13,12 @@ module.exports = {
             template : 'public/index.html',
             filename:'index.html',
         },
-        quest : {
-            title : '任务百科 - JX3BOX',
-            entry:'src/driver/quest.js',
-            template : 'public/quest.html',
-            filename:'quest.html',
-        },
+        // quest : {
+        //     title : '任务百科 - JX3BOX',
+        //     entry:'src/driver/quest.js',
+        //     template : 'public/quest.html',
+        //     filename:'quest.html',
+        // },
     },
 
     //❤️ Porxy ~
