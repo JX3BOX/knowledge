@@ -6,5 +6,7 @@
     "gossip": "el-icon-film",
     "organization": "el-icon-school",
     "player": "el-icon-user",
+    "sleep": "el-icon-map-location",
+    "npc": "el-icon-s-custom",
     "other": "el-icon-more-outline"
 }
