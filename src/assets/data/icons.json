@@ -9,5 +9,6 @@
     "sleep": "el-icon-map-location",
     "npc": "el-icon-monitor",
     "castle": "el-icon-coordinate",
+    "blacklist": "el-icon-warning-outline",
     "other": "el-icon-more-outline"
 }
