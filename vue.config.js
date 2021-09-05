@@ -31,13 +31,13 @@ module.exports = {
                 }
             },
             "/api/summary": {
-                "target": "https://next.jx3box.com",
+                "target": "https://next2.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
             },
             "/api/comment": {
-                "target": "https://next.jx3box.com",
+                "target": "https://next2.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
@@ -54,6 +54,18 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
+            "/api/cms":{
+                "target": "https://cms.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api/inspire":{
+                "target": "https://pay.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            }
         }
     },
 

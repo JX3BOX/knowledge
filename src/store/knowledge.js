@@ -13,6 +13,7 @@ let store = {
         sidebar : {
             knowledge_type: null,
         },
+        client : location.href.includes('origin') ? 'origin' : 'std',
 
         // 单页
         hid:0,

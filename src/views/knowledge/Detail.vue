@@ -10,33 +10,30 @@
         <div class="m-wiki" v-if="wiki_post && wiki_post.post">
             <WikiPanel class="m-knowledge-panel" :wiki-post="wiki_post">
                 <template slot="head-title">
-                    <img
-                        class="u-icon"
-                        svg-inline
-                        src="../../assets/img/knowledge.svg"
-                    />
+                    <img class="u-icon" svg-inline src="../../assets/img/knowledge.svg" />
                     <span>通识正文</span>
                 </template>
                 <template slot="head-actions">
-                    <a
-                        class="el-button el-button--primary"
-                        :href="publish_url(`knowledge/${id}`)"
-                    >
+                    <a class="el-button el-button--primary" :href="publish_url(`knowledge/${id}`)">
                         <i class="el-icon-edit"></i>
                         <span>完善百科通识</span>
                     </a>
                 </template>
                 <template slot="body">
                     <Article :content="wiki_post.post.content" />
+                    <Thx
+                        class="m-thx"
+                        slot="single-append"
+                        :postId="id"
+                        postType="knowledge"
+                        :userId="author_id"
+                        :adminBoxcoinEnable="isRevision"
+                        :userBoxcoinEnable="isRevision"
+                    />
                 </template>
             </WikiPanel>
 
-            <WikiRevisions
-                v-if="id"
-                type="knowledge"
-                :source-id="id"
-                style="margin-bottom:35px"
-            />
+            <WikiRevisions v-if="id" type="knowledge" :source-id="id" style="margin-bottom:35px" />
 
             <template v-if="id">
                 <el-divider content-position="left">讨论</el-divider>
@@ -46,10 +43,8 @@
 
         <div v-else class="m-wiki-null">
             <i class="el-icon-s-opportunity"></i>
-            <span> 暂无内容，我要</span>
-            <a class="s-link" :href="publish_url(`knowledge/${id}`)"
-                >完善百科通识</a
-            >
+            <span>暂无内容，我要</span>
+            <a class="s-link" :href="publish_url(`knowledge/${id}`)">完善百科通识</a>
         </div>
     </div>
 </template>
@@ -68,23 +63,29 @@ import Comment from "@jx3box/jx3box-comment-ui/src/Comment.vue";
 export default {
     name: "Detail",
     props: [],
-    data: function() {
+    data: function () {
         return {
             wiki_post: "",
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return this.$route.params.source_id;
         },
-        type: function() {
+        type: function () {
             return this.wiki_post.source.type;
+        },
+        isRevision: function () {
+            return !!this.$route.params.post_id;
+        },
+        author_id: function () {
+            return ~~this.wiki_post.post.user_id;
         },
     },
     methods: {
         publish_url: publishLink,
     },
-    created: function() {
+    created: function () {
         if (this.id) {
             postStat("knowledge", this.id);
         }
