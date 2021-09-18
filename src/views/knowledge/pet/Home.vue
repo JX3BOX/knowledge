@@ -49,7 +49,7 @@
 
 <script>
 import { feedback } from "@jx3box/jx3box-common/data/jx3box.json";
-import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
+import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import ItemSimple from "@jx3box/jx3box-editor/src/ItemSimple";
 import { get_list, get_type_list } from "@/service/pet.js";
 import { getLink, iconLink } from "@jx3box/jx3box-common/js/utils";

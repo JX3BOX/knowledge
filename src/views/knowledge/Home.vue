@@ -226,7 +226,7 @@
 const { JX3BOX } = require("@jx3box/jx3box-common");
 import { feedback } from "@jx3box/jx3box-common/data/jx3box.json";
 import Search from "../../components/knowledge/Search";
-import WikiPanel from "@jx3box/jx3box-common-ui/src/WikiPanel";
+import WikiPanel from "@jx3box/jx3box-common-ui/src/wiki/WikiPanel";
 import {WikiPost} from "@jx3box/jx3box-common/js/helper";
 import { getMenuGroups } from "@/service/helper.js";
 import { get_list } from "@/service/knowledge.js";
