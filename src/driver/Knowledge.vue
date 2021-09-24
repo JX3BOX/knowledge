@@ -9,7 +9,7 @@
             :adminEnable="false"
             :feedbackEnable="true"
         >
-            <img slot="logo" svg-inline src="../assets/img/knowledge.svg" />
+            <img slot="logo" svg-inline :src="getAppIcon('knowledge')" />
             <Info />
         </Breadcrumb>
         <LeftSidebar>
@@ -31,8 +31,7 @@
 import Info from "@/components/knowledge/Info.vue";
 import Nav from "@/components/knowledge/Nav.vue";
 import Extend from "@/components/knowledge/Extend.vue";
-import {getRewrite} from '@jx3box/jx3box-common/js/utils'
-
+import {getRewrite,getAppIcon} from '@jx3box/jx3box-common/js/utils'
 export default {
     name: "App",
     beforeCreate: function() {
@@ -63,6 +62,9 @@ export default {
                 }
             }
         },
+    },
+    methods : {
+        getAppIcon
     }
 };
 </script>
